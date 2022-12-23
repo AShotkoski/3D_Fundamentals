@@ -1,16 +1,16 @@
 #pragma once
 
 #include "ChiliMath.h"
+#include "Vec2.h"
 
 template <typename T>
-class _Vec3
+class _Vec3 : public _Vec2<T>
 {
 public:
 	_Vec3() {}
 	_Vec3( T x, T y, T z )
 		:
-		x( x ),
-		y( y ),
+		_Vec2(x,y),
 		z( z )
 	{}
 	_Vec3( const _Vec3& vect )

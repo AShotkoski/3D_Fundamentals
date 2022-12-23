@@ -38,6 +38,9 @@ void Game::Go()
 
 void Game::UpdateModel()
 {
+	Vec3 v = { 0.5f, -1.f, 1.f };
+	pube.Transform( v );
+
 }
 
 void Game::ComposeFrame()
