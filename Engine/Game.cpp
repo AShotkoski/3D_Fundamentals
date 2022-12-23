@@ -48,6 +48,7 @@ void Game::ComposeFrame()
 	auto lines = cube.GetLines();
 	for ( auto& v : lines.verticies )
 	{
+		v += {0.f, 0.f, 1.f};
 		pube.Transform( v );
 	}
 	for ( auto i = lines.indicies.cbegin(), end = lines.indicies.cend(); i != end; std::advance( i, 2 ) )
