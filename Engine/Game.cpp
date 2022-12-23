@@ -24,7 +24,8 @@
 Game::Game( MainWindow& wnd )
 	:
 	wnd( wnd ),
-	gfx( wnd )
+	gfx( wnd ),
+	cube(1.f)
 {
 }
 
@@ -38,11 +39,19 @@ void Game::Go()
 
 void Game::UpdateModel()
 {
-	Vec3 v = { 0.5f, -1.f, 1.f };
-	pube.Transform( v );
+	
 
 }
 
 void Game::ComposeFrame()
 {
+	auto lines = cube.GetLines();
+	for ( auto& v : lines.verticies )
+	{
+		pube.Transform( v );
+	}
+	for ( auto i = lines.indicies.cbegin(), end = lines.indicies.cend(); i != end; std::advance( i, 2 ) )
+	{
+		gfx.DrawLine( lines.verticies[*i], lines.verticies[ *( std::next(i) ) ], Colors::White );
+	}
 }

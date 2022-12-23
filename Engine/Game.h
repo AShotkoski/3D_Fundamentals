@@ -22,6 +22,7 @@
 
 #include "Graphics.h"
 #include "PubeScreenTransformer.h"
+#include "Cube.h"
 
 class Game
 {
@@ -43,4 +44,5 @@ private:
 	/*  User Variables              */
 	/********************************/
 	PubeScreenTransformer pube;
+	Cube cube;
 };
