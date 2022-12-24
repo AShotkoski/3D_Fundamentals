@@ -66,6 +66,14 @@ void Game::UpdateModel()
 	{
 		xRot = (float)ClampAngle( xRot - dt * dTheta );
 	}
+	if ( wnd.kbd.KeyIsPressed( 'R' ) )
+	{
+		zOffset += dt ;
+	}
+	if ( wnd.kbd.KeyIsPressed( 'F' ) )
+	{
+		zOffset -= dt ;
+	}
 
 }
 
@@ -76,7 +84,7 @@ void Game::ComposeFrame()
 	for ( auto& v : lines.verticies )
 	{
 		v *= rot;
-		v += {0.f, 0.f, 1.f};
+		v += {0.f, 0.f, zOffset};
 		pube.Transform( v );
 	}
 	for ( auto i = lines.indicies.cbegin(), end = lines.indicies.cend(); i != end; std::advance( i, 2 ) )
