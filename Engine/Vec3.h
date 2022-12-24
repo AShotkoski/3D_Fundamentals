@@ -111,6 +111,12 @@ public:
 	{
 		return !( *this == rhs );
 	}
+	_Vec3   Cross( const _Vec3& rhs )
+	{
+		return _Vec3{ y * rhs.z - rhs.y * z,
+					 z * rhs.x - rhs.z * x,
+					 x * rhs.y - rhs.x * y };
+	}
 public:
 	T z;
 };
