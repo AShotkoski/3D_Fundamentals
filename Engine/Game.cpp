@@ -80,6 +80,21 @@ void Game::UpdateModel()
 
 void Game::ComposeFrame()
 {
+	Color cols[12] =
+	{
+		Colors::Black,
+		Colors::Blue,
+		Colors::Cyan,
+		Colors::Gray,
+		Colors::Green,
+		Colors::LightGray,
+		Colors::Magenta,
+		Colors::Red,
+		Colors::White,
+		Colors::Yellow,
+		Colors::Green,
+		Colors::Red
+	};
 	auto tris = cube.GetTriangles();
 	const auto rot = Mat3::RotationX(xRot) * Mat3::RotationY(yRot) * Mat3::RotationZ( zRot ) ;
 	for ( auto& v : tris.verticies )
@@ -91,7 +106,7 @@ void Game::ComposeFrame()
 	for ( auto i = tris.indicies.cbegin(), end = tris.indicies.cend(); i != end; std::advance( i, 3 ) )
 	{
 		gfx.DrawTriangle( tris.verticies[*i], tris.verticies[ *( std::next(i) ) ], tris.verticies[*( std::next( i,2 ) )],
-			Colors::White );
+			cols[std::distance(tris.indicies.cbegin(), i) / 3]);
 	}
 
 }
