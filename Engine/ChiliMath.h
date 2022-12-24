@@ -29,3 +29,9 @@ inline auto sq( const T& x )
 {
 	return x * x;
 }
+
+template <typename T>
+inline auto ClampAngle( T angle )
+{
+	return fmod( (T)angle, (T)PI );
+}

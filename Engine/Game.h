@@ -45,4 +45,9 @@ private:
 	/********************************/
 	PubeScreenTransformer pube;
 	Cube cube;
+	const float dTheta = PI / 4;
+	float xRot = 0.f;
+	float yRot = 0.f;
+	float zRot = 0.f;
+
 };

@@ -44,6 +44,10 @@ public:
 		}
 		return result;
 	}
+	_Mat3& operator*=( const _Mat3& rhs )
+	{
+		return *this = *this * rhs;
+	}
 	static _Mat3 Identity()
 	{
 		_Mat3 i = { (T)1.0,(T)0.0,(T)0.0
@@ -57,6 +61,39 @@ public:
 					(T)0.0,factor,(T)0.0,
 					(T)0.0,(T)0.0,factor };
 		return s;
+	}
+	static _Mat3 RotationZ( T angle )
+	{
+		const T st = (T)sin( angle );
+		const T ct = (T)cos( angle );
+
+		return _Mat3{ 
+			 ct,   st,   (T)0,
+			-st,   ct,   (T)0,
+		    (T)0,  (T)0, (T)1 
+		};
+	}
+	static _Mat3 RotationY( T angle )
+	{
+		const T st = (T)sin( angle );
+		const T ct = (T)cos( angle );
+
+		return _Mat3{ 
+			  ct,   (T)0,  -st,
+			(T)0,   (T)1, (T)0,
+		      st,   (T)0,   ct 
+		};
+	}
+	static _Mat3 RotationX( T angle )
+	{
+		const T st = (T)sin( angle );
+		const T ct = (T)cos( angle );
+
+		return _Mat3{ 
+			(T)1, (T)0, (T)0,
+			(T)0,   ct,   st,
+			(T)0,  -st,   ct
+		};
 	}
 public:
 	// [ row ][ col ]

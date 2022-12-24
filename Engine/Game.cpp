@@ -20,6 +20,7 @@
 ******************************************************************************************/
 #include "MainWindow.h"
 #include "Game.h"
+#include "Mat3.h"
 
 Game::Game( MainWindow& wnd )
 	:
@@ -39,15 +40,42 @@ void Game::Go()
 
 void Game::UpdateModel()
 {
-	
+	const float dt = 1.f / 144.f;
+
+	if ( wnd.kbd.KeyIsPressed( 'Q' ) )
+	{
+		zRot =  (float)ClampAngle( zRot + dt * dTheta);
+	}
+	if ( wnd.kbd.KeyIsPressed( 'E' ) )
+	{
+		zRot = (float)ClampAngle( zRot - dt * dTheta );
+	}
+	if ( wnd.kbd.KeyIsPressed( 'D' ) )
+	{
+		yRot =  (float)ClampAngle( yRot + dt * dTheta);
+	}
+	if ( wnd.kbd.KeyIsPressed( 'A' ) )
+	{
+		yRot = (float)ClampAngle( yRot - dt * dTheta );
+	}
+	if ( wnd.kbd.KeyIsPressed( 'W' ) )
+	{
+		xRot =  (float)ClampAngle( xRot + dt * dTheta);
+	}
+	if ( wnd.kbd.KeyIsPressed( 'S' ) )
+	{
+		xRot = (float)ClampAngle( xRot - dt * dTheta );
+	}
 
 }
 
 void Game::ComposeFrame()
 {
 	auto lines = cube.GetLines();
+	const auto rot = Mat3::RotationX(xRot) * Mat3::RotationY(yRot) * Mat3::RotationZ( zRot ) ;
 	for ( auto& v : lines.verticies )
 	{
+		v *= rot;
 		v += {0.f, 0.f, 1.f};
 		pube.Transform( v );
 	}
