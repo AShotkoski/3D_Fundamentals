@@ -381,3 +381,106 @@ void Graphics::DrawLine( float x1,float y1,float x2,float y2,Color c )
 		}
 	}
 }
+
+void Graphics::DrawTriangle( const Vec2& p0, const Vec2& p1, const Vec2& p2, Color c )
+{
+	//Get pointers so we can swap pts
+	const Vec2* pp0 = &p0;
+	const Vec2* pp1 = &p1;
+	const Vec2* pp2 = &p2;
+
+	//Sort verticies by y, p0 is low (LOW IS HIGHER ON SCREEN)
+	if ( pp2->y < pp1->y ) std::swap( pp2, pp1 );
+	if ( pp1->y < pp0->y ) std::swap( pp1, pp0 );
+	if ( pp2->y < pp1->y ) std::swap( pp2, pp1 );
+
+	//test for natural flat top
+	if ( pp0->y == pp1->y )
+	{
+		//sort by x for drawing func
+		if(pp0->x > pp1->x ) std::swap( pp0, pp1 );
+		DrawFlatTopTriangle( *pp0, *pp1, *pp2, c );
+	}
+	//test for natural flat bottom
+	else if ( pp2->y == pp1->y )
+	{
+		if ( pp1->x > pp2->x ) std::swap( pp2, pp1 );
+		DrawFlatBottomTriangle( *pp0, *pp2, *pp1, c );
+	}
+	else //general tri
+	{
+		//split vertex
+		const auto alpha =  ( pp1->y - pp0->y ) /
+							( pp2->y - pp0->y );
+		const Vec2 pi = *pp0 + ( *pp2 - *pp0 ) * alpha;
+
+		//Major right
+		if ( pi.x < pp1->x )
+		{
+			DrawFlatBottomTriangle( *pp0, *pp1, pi, c );
+			DrawFlatTopTriangle( pi, *pp1, *pp2,c );
+		}
+		else
+		{
+			DrawFlatBottomTriangle( *pp0, pi, *pp1,  c );
+			DrawFlatTopTriangle(  *pp1, pi, *pp2,c );
+		}
+	}
+
+}
+
+//Take vectors top left -> top right -> bottom
+void Graphics::DrawFlatTopTriangle( const Vec2& p0, const Vec2& p1, const Vec2& p2, Color c )
+{
+	//calc slopes (inverse)
+	const float m0 = ( p2.x - p0.x ) / ( p2.y - p0.y );
+	const float m1 = ( p2.x - p1.x ) / ( p2.y - p1.y );
+
+	//Calc top and bottom scanlines
+	const int yStart = (int)ceil( p0.y - 0.5f );
+	const int yEnd = (int)ceil( p2.y - 0.5f ); // one past last scanline
+
+	for ( int y = yStart; y < yEnd; y++ ) //each scanline
+	{
+		//calulate start and end point (x)
+		const float px0 = m0 * ( (float)y + 0.5f - p0.y ) + p0.x;
+		const float px1 = m1 * ( (float)y + 0.5f - p1.y ) + p1.x;
+
+		//calc start and end INT (x)
+		const int xStart = (int)ceil( px0 - 0.5f );
+		const int xEnd = (int)ceil( px1 - 0.5f ); //px after last
+
+		for ( int x = xStart; x < xEnd; x++ )
+		{
+			PutPixel( x, y, c );
+		}
+	}
+}
+
+//Take vectors top -> bottom right -> bottom left
+void Graphics::DrawFlatBottomTriangle( const Vec2& p0, const Vec2& p1, const Vec2& p2, Color c )
+{
+	//calc slopes (inverse)
+	const float m0 = ( p2.x - p0.x ) / ( p2.y - p0.y );
+	const float m1 = ( p1.x - p0.x ) / ( p1.y - p0.y );
+
+	//Calc top and bottom scanlines
+	const int yStart = (int)ceil( p0.y - 0.5f );
+	const int yEnd = (int)ceil( p2.y - 0.5f ); // one past last scanline
+
+	for ( int y = yStart; y < yEnd; y++ ) //each scanline
+	{
+		//calulate start and end point (x)
+		const float px0 = m0 * ( (float)y + 0.5f - p0.y ) + p0.x;
+		const float px1 = m1 * ( (float)y + 0.5f - p0.y ) + p0.x;
+
+		//calc start and end INT (x)
+		const int xStart = (int)ceil( px0 - 0.5f );
+		const int xEnd = (int)ceil( px1 - 0.5f ); //px after last
+
+		for ( int x = xStart; x < xEnd; x++ )
+		{
+			PutPixel( x, y, c );
+		}
+	}
+}

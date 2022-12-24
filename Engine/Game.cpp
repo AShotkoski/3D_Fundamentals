@@ -28,6 +28,7 @@ Game::Game( MainWindow& wnd )
 	gfx( wnd ),
 	cube(1.f)
 {
+	
 }
 
 void Game::Go()
@@ -91,4 +92,6 @@ void Game::ComposeFrame()
 	{
 		gfx.DrawLine( lines.verticies[*i], lines.verticies[ *( std::next(i) ) ], Colors::White );
 	}
+
+	gfx.DrawTriangle( { 420.f,0.f }, { 360.f,126.f }, { 25.f, 67.f }, Colors::Red );
 }
