@@ -80,18 +80,18 @@ void Game::UpdateModel()
 
 void Game::ComposeFrame()
 {
-	auto lines = cube.GetLines();
+	auto tris = cube.GetTriangles();
 	const auto rot = Mat3::RotationX(xRot) * Mat3::RotationY(yRot) * Mat3::RotationZ( zRot ) ;
-	for ( auto& v : lines.verticies )
+	for ( auto& v : tris.verticies )
 	{
 		v *= rot;
 		v += {0.f, 0.f, zOffset};
 		pube.Transform( v );
 	}
-	for ( auto i = lines.indicies.cbegin(), end = lines.indicies.cend(); i != end; std::advance( i, 2 ) )
+	for ( auto i = tris.indicies.cbegin(), end = tris.indicies.cend(); i != end; std::advance( i, 3 ) )
 	{
-		gfx.DrawLine( lines.verticies[*i], lines.verticies[ *( std::next(i) ) ], Colors::White );
+		gfx.DrawTriangle( tris.verticies[*i], tris.verticies[ *( std::next(i) ) ], tris.verticies[*( std::next( i,2 ) )],
+			Colors::White );
 	}
 
-	gfx.DrawTriangle( { 420.f,0.f }, { 360.f,126.f }, { 25.f, 67.f }, Colors::Red );
 }

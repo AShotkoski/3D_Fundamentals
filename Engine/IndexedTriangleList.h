@@ -3,7 +3,7 @@
 #include "Vec3.h"
 
 //verticies, indicies
-struct IndexedLineList
+struct IndexedTriangleList
 {
 	std::vector<Vec3> verticies;
 	std::vector<size_t> indicies;
