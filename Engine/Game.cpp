@@ -99,7 +99,7 @@ void Game::ComposeFrame()
 
 	auto tris = cube.GetTriangles();
 	const auto rot = Mat3::RotationX( xRot ) * Mat3::RotationY( yRot ) * Mat3::RotationZ( zRot );
-	//Transform verticies
+	//Transform verticies from object space to world/view space
 	for ( auto& v : tris.verticies )
 	{
 		v *= rot;
@@ -116,14 +116,16 @@ void Game::ComposeFrame()
 	}
 
 
-	//Transform to pube space
+	//Transform to screen space
 	for ( auto& v : tris.verticies )
 	{
 		pube.Transform( v );
 	}
 
+	//draw the triangles (cube)
 	for ( int i = 0; i < tris.indicies.size(); i += 3 )
 	{
+		//skip back-facing triangles
 		if ( tris.cullFlags[i / 3] )
 		{
 			gfx.DrawTriangle( tris.verticies[tris.indicies[i]],
