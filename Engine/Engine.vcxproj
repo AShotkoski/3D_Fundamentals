@@ -159,6 +159,7 @@
     <ClInclude Include="Scene.h" />
     <ClInclude Include="Surface.h" />
     <ClInclude Include="Vec2.h" />
+    <ClInclude Include="WireframeCubeScene.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DXErr.cpp" />

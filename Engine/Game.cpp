@@ -22,6 +22,7 @@
 #include "Game.h"
 #include "Mat3.h"
 #include "SolidCubeScene.h"
+#include "WireframeCubeScene.h"
 
 Game::Game( MainWindow& wnd )
 	:
@@ -29,6 +30,7 @@ Game::Game( MainWindow& wnd )
 	gfx( wnd )
 {
 	scenes.emplace_back( std::make_unique<SolidCubeScene>() );
+	scenes.emplace_back( std::make_unique<WireframeCubeScene>() );
 	currScene = scenes.begin();
 }
 
