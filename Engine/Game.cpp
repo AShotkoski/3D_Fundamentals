@@ -23,6 +23,7 @@
 #include "Mat3.h"
 #include "SolidCubeScene.h"
 #include "WireframeCubeScene.h"
+#include "TextureMappedCubeScene.h"
 
 Game::Game( MainWindow& wnd )
 	:
@@ -31,6 +32,7 @@ Game::Game( MainWindow& wnd )
 {
 	scenes.emplace_back( std::make_unique<SolidCubeScene>() );
 	scenes.emplace_back( std::make_unique<WireframeCubeScene>() );
+	scenes.emplace_back( std::make_unique<TextureMappedCubeScene>() );
 	currScene = scenes.begin();
 }
 
