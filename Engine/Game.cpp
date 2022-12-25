@@ -50,7 +50,7 @@ void Game::UpdateModel()
 	{
 		auto e = wnd.kbd.ReadKey();
 
-		if(e.GetCode() == VK_TAB )
+		if(e.GetCode() == VK_TAB && e.IsPress() )
 		{
 			CycleScenes();
 		}
