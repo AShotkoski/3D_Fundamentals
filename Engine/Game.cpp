@@ -43,8 +43,27 @@ void Game::Go()
 void Game::UpdateModel()
 {
 	const float dt = 1.f / 144.f;
+
+	while ( !wnd.kbd.KeyIsEmpty() )
+	{
+		auto e = wnd.kbd.ReadKey();
+
+		if(e.GetCode() == VK_TAB )
+		{
+			CycleScenes();
+		}
+	}
+
 	( *currScene )->Update( wnd.kbd, wnd.mouse, dt );
 	
+}
+
+void Game::CycleScenes()
+{
+	if ( ++currScene == scenes.end() )
+	{
+		currScene = scenes.begin();
+	}
 }
 
 void Game::ComposeFrame()
