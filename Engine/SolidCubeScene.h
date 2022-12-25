@@ -4,10 +4,10 @@
 #include "Mat3.h"
 #include "PubeScreenTransformer.h"
 
-class CubeScene : public Scene
+class SolidCubeScene : public Scene
 {
 public:
-	CubeScene() = default;
+	SolidCubeScene() = default;
 	void Update( Keyboard& kbd, Mouse& mouse, float dt ) override
 	{
 		if ( kbd.KeyIsPressed( 'Q' ) )

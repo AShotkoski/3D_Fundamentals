@@ -21,14 +21,14 @@
 #include "MainWindow.h"
 #include "Game.h"
 #include "Mat3.h"
-#include "CubeScene.h"
+#include "SolidCubeScene.h"
 
 Game::Game( MainWindow& wnd )
 	:
 	wnd( wnd ),
 	gfx( wnd )
 {
-	scenes.emplace_back( std::make_unique<CubeScene>() );
+	scenes.emplace_back( std::make_unique<SolidCubeScene>() );
 	currScene = scenes.begin();
 }
 
