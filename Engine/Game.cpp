@@ -82,7 +82,7 @@ void Game::ComposeFrame()
 {
 	Color cols[12] =
 	{
-		Colors::Black,
+		Colors::White,
 		Colors::Blue,
 		Colors::Cyan,
 		Colors::Gray,

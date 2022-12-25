@@ -33,5 +33,6 @@ inline auto sq( const T& x )
 template <typename T>
 inline auto ClampAngle( T angle )
 {
-	return fmod( (T)angle, (T)PI );
+	auto mod = fmod( (T)angle, 2 * (T)PI );
+	return mod;
 }
