@@ -95,18 +95,43 @@ void Game::ComposeFrame()
 		Colors::Green,
 		Colors::Red
 	};
+
+
 	auto tris = cube.GetTriangles();
-	const auto rot = Mat3::RotationX(xRot) * Mat3::RotationY(yRot) * Mat3::RotationZ( zRot ) ;
+	const auto rot = Mat3::RotationX( xRot ) * Mat3::RotationY( yRot ) * Mat3::RotationZ( zRot );
+	//Transform verticies
 	for ( auto& v : tris.verticies )
 	{
 		v *= rot;
 		v += {0.f, 0.f, zOffset};
+	}
+
+	//Set cull flags
+	for ( int i = 0; i < tris.indicies.size() / 3; i++)
+	{
+		const Vec3& v0 = (Vec3)tris.verticies[tris.indicies[i * 3] ];
+		const Vec3& v1 = (Vec3)tris.verticies[tris.indicies[i * 3 + 1]];
+		const Vec3& v2 = (Vec3)tris.verticies[tris.indicies[i * 3 + 2]];
+		tris.cullFlags[i] = v0 * ( v1 - v0 ).Cross( ( v2 - v0 ) ) <= 0.f;
+	}
+
+
+	//Transform to pube space
+	for ( auto& v : tris.verticies )
+	{
 		pube.Transform( v );
 	}
-	for ( auto i = tris.indicies.cbegin(), end = tris.indicies.cend(); i != end; std::advance( i, 3 ) )
+
+	for ( int i = 0; i < tris.indicies.size(); i += 3 )
 	{
-		gfx.DrawTriangle( tris.verticies[*i], tris.verticies[ *( std::next(i) ) ], tris.verticies[*( std::next( i,2 ) )],
-			cols[std::distance(tris.indicies.cbegin(), i) / 3]);
+		if ( tris.cullFlags[i / 3] )
+		{
+			gfx.DrawTriangle( tris.verticies[tris.indicies[i]],
+				tris.verticies[tris.indicies[i + 1]],
+				tris.verticies[tris.indicies[i + 2]],
+				cols[i / 3] );
+
+		}
 	}
 
 }
