@@ -31,7 +31,7 @@ public:
 				}
 		};
 	}
-	IndexedTriangleList GetTriangles() const
+	IndexedTriangleList<Vec3> GetTriangles() const
 	{
 		return
 		{

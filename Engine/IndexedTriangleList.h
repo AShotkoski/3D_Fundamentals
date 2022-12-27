@@ -3,9 +3,11 @@
 #include "Vec3.h"
 
 //verticies, indicies
-struct IndexedTriangleList
+template <class T>
+class IndexedTriangleList
 {
-	IndexedTriangleList( std::vector<Vec3> verts, std::vector<size_t> inds )
+public:
+	IndexedTriangleList( std::vector<T> verts, std::vector<size_t> inds )
 		:
 		verticies( std::move( verts ) ),
 		indicies( std::move( inds ) )
@@ -14,7 +16,7 @@ struct IndexedTriangleList
 		assert( indicies.size() % 3 == 0 );
 		cullFlags.resize( indicies.size() / 3, false );
 	}
-	std::vector<Vec3> verticies;
+	std::vector<T> verticies;
 	std::vector<size_t> indicies;
 	std::vector<bool> cullFlags;
 };

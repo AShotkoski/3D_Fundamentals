@@ -7,7 +7,10 @@
 class TextureMappedCubeScene : public Scene
 {
 public:
-	TextureMappedCubeScene() = default;
+	TextureMappedCubeScene()
+	{
+
+	};
 	void Update( Keyboard& kbd, Mouse& mouse, float dt ) override
 	{
 		if ( kbd.KeyIsPressed( 'Q' ) )
@@ -47,7 +50,7 @@ public:
 	void Draw( Graphics& gfx ) const override
 	{
 		const float size = .5f;
-		auto tris = IndexedTriangleList{
+		auto tris = IndexedTriangleList<Vec3>{
 			{
 				Vec3{-size, size, zOffset}, Vec3{size, size, zOffset},
 				Vec3{size, -size, zOffset}, Vec3{-size, -size, zOffset}
@@ -71,15 +74,12 @@ public:
 		}
 
 		//draw the mf
-		for ( int i = 0; i < tris.indicies.size(); i += 3 )
-		{
-			
+		for ( size_t i = 0; i < tris.indicies.size(); i += 3 )
+		{		
 			gfx.DrawTriangle( tris.verticies[tris.indicies[i]],
 				tris.verticies[tris.indicies[i + 1]],
 				tris.verticies[tris.indicies[i + 2]],
 				Colors::Cyan );
-
-			
 		}
 	}
 
@@ -92,4 +92,6 @@ private:
 	float xRot = 0.f;
 	float yRot = 0.f;
 	float zRot = 0.f;
+
+	Surface tex = Surface::FromFile(L"sprites\\test.png");
 };
