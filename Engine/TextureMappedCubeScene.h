@@ -50,10 +50,10 @@ public:
 	void Draw( Graphics& gfx ) const override
 	{
 		const float size = .5f;
-		auto tris = IndexedTriangleList<Vec3>{
+		auto tris = IndexedTriangleList<TextureVertex>{
 			{
-				Vec3{-size, size, zOffset}, Vec3{size, size, zOffset},
-				Vec3{size, -size, zOffset}, Vec3{-size, -size, zOffset}
+				TextureVertex{{-size, size, zOffset}, {-1.f,1.f}}, TextureVertex{{size, size, zOffset}, {1.f,1.f}},
+				TextureVertex{{size, -size, zOffset}, {1.f,-1.f}}, TextureVertex{{-size, -size, zOffset}, {-1.f,-1.f}}
 			}, {0,1,2, 0,2,3 }
 		};
 
@@ -62,24 +62,24 @@ public:
 		//Transform verticies from object space to world/view space
 		for ( auto& v : tris.verticies )
 		{
-			v *= rot;
-			v += {0.f, 0.f, zOffset};
+			v.pos *= rot;
+			v.pos += {0.f, 0.f, zOffset};
 		}
 
 
 		//Transform to screen space
 		for ( auto& v : tris.verticies )
 		{
-			pube.Transform( v );
+			pube.Transform( v.pos );
 		}
 
 		//draw the mf
 		for ( size_t i = 0; i < tris.indicies.size(); i += 3 )
 		{		
-			gfx.DrawTriangle( tris.verticies[tris.indicies[i]],
+			gfx.DrawTexTriangle( tris.verticies[tris.indicies[i]],
 				tris.verticies[tris.indicies[i + 1]],
 				tris.verticies[tris.indicies[i + 2]],
-				Colors::Cyan );
+				tex );
 		}
 	}
 
