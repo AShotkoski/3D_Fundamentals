@@ -117,6 +117,10 @@ public:
 					 z * rhs.x - rhs.z * x,
 					 x * rhs.y - rhs.x * y };
 	}
+	_Vec3 GetInterpolationTo( const _Vec3& p1, const float alpha ) const
+	{
+		return *this + ( p1 - *this ) * alpha;
+	}
 public:
 	T z;
 };

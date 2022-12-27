@@ -124,6 +124,10 @@ public:
 	{
 		return !(*this == rhs);
 	}
+	_Vec2 GetInterpolationTo( const _Vec2& p1, const float alpha ) const
+	{
+		return *this + ( p1 - *this ) * alpha;
+	}
 public:
 	T x;
 	T y;

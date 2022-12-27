@@ -412,8 +412,7 @@ void Graphics::DrawTriangle( const Vec2& p0, const Vec2& p1, const Vec2& p2, Col
 		//split vertex
 		const auto alpha =  ( pp1->y - pp0->y ) /
 							( pp2->y - pp0->y );
-		const Vec2 pi = *pp0 + ( *pp2 - *pp0 ) * alpha;
-
+		const Vec2 pi = pp0->GetInterpolationTo( *pp2, alpha );
 		//Major right
 		if ( pi.x < pp1->x )
 		{
