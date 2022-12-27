@@ -12,7 +12,7 @@ public:
 	{}
 	TextureVertex GetInterpolationTo( const TextureVertex& other, const float alpha ) const
 	{
-		TextureVertex ret(pos.GetInterpolationTo(other.pos,alpha),tc.GetInterpolationTo(other.tc,alpha));
+		return TextureVertex(pos.GetInterpolationTo(other.pos,alpha),tc.GetInterpolationTo(other.tc,alpha));
 	}
 public:
 	Vec3 pos;
