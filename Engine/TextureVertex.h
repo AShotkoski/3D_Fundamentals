@@ -14,6 +14,46 @@ public:
 	{
 		return TextureVertex(pos.GetInterpolationTo(other.pos,alpha),tc.GetInterpolationTo(other.tc,alpha));
 	}
+	TextureVertex&	operator-=( const TextureVertex& rhs )
+	{
+		pos -= rhs.pos;
+		tc -= rhs.tc;
+		return *this;
+	}
+	TextureVertex	operator-( const TextureVertex& rhs ) const
+	{
+		return TextureVertex(*this) -= rhs;
+	}
+	TextureVertex&	operator+=( const TextureVertex& rhs )
+	{
+		pos += rhs.pos;
+		tc += rhs.tc;
+		return *this;
+	}
+	TextureVertex	operator+( const TextureVertex& rhs ) const
+	{
+		return TextureVertex(*this) += rhs;
+	}
+	TextureVertex&	operator/=( const float rhs )
+	{
+		pos /= rhs;
+		tc /= rhs;
+		return *this;
+	}
+	TextureVertex	operator/( const float rhs ) const
+	{
+		return TextureVertex(*this) /= rhs;
+	}
+	TextureVertex&	operator*=( const float rhs )
+	{
+		pos *= rhs;
+		tc *= rhs;
+		return *this;
+	}
+	TextureVertex	operator*( const float rhs ) const
+	{
+		return TextureVertex(*this) *= rhs;
+	}
 public:
 	Vec3 pos;
 	Vec2 tc;
