@@ -52,8 +52,8 @@ public:
 		const float size = .5f;
 		auto tris = IndexedTriangleList<TextureVertex>{
 			{
-				TextureVertex{{-size, size, zOffset}, {-1.f,1.f}}, TextureVertex{{size, size, zOffset}, {1.f,1.f}},
-				TextureVertex{{size, -size, zOffset}, {1.f,-1.f}}, TextureVertex{{-size, -size, zOffset}, {-1.f,-1.f}}
+				TextureVertex{{-size, size, zOffset}, {0.f,1.f}}, TextureVertex{{size, size, zOffset}, {1.f,1.f}},
+				TextureVertex{{size, -size, zOffset}, {1.f,0.f}}, TextureVertex{{-size, -size, zOffset}, {0.f,0.f}}
 			}, {0,1,2, 0,2,3 }
 		};
 
@@ -76,7 +76,7 @@ public:
 		//draw the mf
 		for ( size_t i = 0; i < tris.indicies.size(); i += 3 )
 		{		
-			gfx.DrawTexTriangle( tris.verticies[tris.indicies[i]],
+			gfx.DrawTriangleTex( tris.verticies[tris.indicies[i]],
 				tris.verticies[tris.indicies[i + 1]],
 				tris.verticies[tris.indicies[i + 2]],
 				tex );
