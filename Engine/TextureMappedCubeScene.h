@@ -49,13 +49,7 @@ public:
 	}
 	void Draw( Graphics& gfx ) const override
 	{
-		const float size = .5f;
-		auto tris = IndexedTriangleList<TextureVertex>{
-			{
-				TextureVertex{{-size, size, zOffset}, {0.f,1.f}}, TextureVertex{{size, size, zOffset}, {1.f,1.f}},
-				TextureVertex{{size, -size, zOffset}, {1.f,0.f}}, TextureVertex{{-size, -size, zOffset}, {0.f,0.f}}
-			}, {0,1,2, 0,2,3 }
-		};
+		auto tris = cube.GetTexTriangles();
 
 		const auto rot = Mat3::RotationX( xRot ) * Mat3::RotationY( yRot ) * Mat3::RotationZ( zRot );
 
@@ -66,6 +60,14 @@ public:
 			v.pos += {0.f, 0.f, zOffset};
 		}
 
+		//Set cull flags
+		for ( int i = 0; i < tris.indicies.size() / 3; i++ )
+		{
+			const Vec3& v0 = (Vec3)tris.verticies[tris.indicies[i * 3]].pos;
+			const Vec3& v1 = (Vec3)tris.verticies[tris.indicies[i * 3 + 1]].pos;
+			const Vec3& v2 = (Vec3)tris.verticies[tris.indicies[i * 3 + 2]].pos;
+			tris.cullFlags[i] = v0 * ( v1 - v0 ).Cross( ( v2 - v0 ) ) <= 0.f;
+		}
 
 		//Transform to screen space
 		for ( auto& v : tris.verticies )
@@ -75,11 +77,14 @@ public:
 
 		//draw the mf
 		for ( size_t i = 0; i < tris.indicies.size(); i += 3 )
-		{		
-			gfx.DrawTriangleTex( tris.verticies[tris.indicies[i]],
-				tris.verticies[tris.indicies[i + 1]],
-				tris.verticies[tris.indicies[i + 2]],
-				tex );
+		{	
+			if ( tris.cullFlags[i / 3] )
+			{
+				gfx.DrawTriangleTex( tris.verticies[tris.indicies[i]],
+					tris.verticies[tris.indicies[i + 1]],
+					tris.verticies[tris.indicies[i + 2]],
+					tex );
+			}
 		}
 	}
 
