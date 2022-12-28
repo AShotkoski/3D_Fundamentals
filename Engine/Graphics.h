@@ -59,6 +59,7 @@ public:
 	void BeginFrame();
 	void DrawTriangle( const Vec2& v0, const Vec2& v1, const Vec2& v2, Color c );
 	void DrawTriangleTex( const TextureVertex& v0, const TextureVertex& v1, const TextureVertex& v2, const Surface& tex );
+	void DrawTriangleTexWrap( const TextureVertex& v0, const TextureVertex& v1, const TextureVertex& v2, const Surface& tex );
 	void DrawLine( const Vec2& p1, const Vec2& p2, Color c )
 	{
 		DrawLine( p1.x, p1.y, p2.x, p2.y, c );
@@ -79,6 +80,10 @@ private:
 	void DrawFlatTopTriangleTex( const TextureVertex& v0, const TextureVertex& v1, const TextureVertex& v2, const Surface& tex );
 	void DrawFlatBottomTriangleTex( const TextureVertex& v0, const TextureVertex& v1, const TextureVertex& v2, const Surface& tex );
 	void DrawFlatTriangleTex( const TextureVertex& v0, const TextureVertex& v1, const TextureVertex& v2, const Surface& tex,
+		const TextureVertex& dv0, const TextureVertex& dv1, TextureVertex& itEdge1 );
+	void DrawFlatTopTriangleTexWrap( const TextureVertex& v0, const TextureVertex& v1, const TextureVertex& v2, const Surface& tex );
+	void DrawFlatBottomTriangleTexWrap( const TextureVertex& v0, const TextureVertex& v1, const TextureVertex& v2, const Surface& tex );
+	void DrawFlatTriangleTexWrap( const TextureVertex& v0, const TextureVertex& v1, const TextureVertex& v2, const Surface& tex,
 		const TextureVertex& dv0, const TextureVertex& dv1, TextureVertex& itEdge1 );
 private:
 	GDIPlusManager										gdipMan;

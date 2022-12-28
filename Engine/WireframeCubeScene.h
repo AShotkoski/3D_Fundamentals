@@ -77,7 +77,7 @@ public:
 
 private:
 	PubeScreenTransformer pube;
-	Cube cube = ( 1.f );
+	Cube cube = Cube( 1.f, 1.f );
 
 	const float dTheta = PI / 4;
 	float zOffset = 2.f;

@@ -25,6 +25,7 @@
 #include <assert.h>
 #include <string>
 #include <array>
+#include <cmath>
 #include <functional>
 
 // Ignore the intellisense error "cannot open source file" for .shh files.
@@ -472,6 +473,51 @@ void Graphics::DrawTriangleTex( const TextureVertex& v0, const TextureVertex& v1
 	}
 }
 
+void Graphics::DrawTriangleTexWrap( const TextureVertex& v0, const TextureVertex& v1, const TextureVertex& v2, const Surface& tex )
+{
+	// using pointers so we can swap (for sorting purposes)
+	const TextureVertex* pv0 = &v0;
+	const TextureVertex* pv1 = &v1;
+	const TextureVertex* pv2 = &v2;
+
+	// sorting vertices by y
+	if ( pv1->pos.y < pv0->pos.y ) std::swap( pv0, pv1 );
+	if ( pv2->pos.y < pv1->pos.y ) std::swap( pv1, pv2 );
+	if ( pv1->pos.y < pv0->pos.y ) std::swap( pv0, pv1 );
+
+	if ( pv0->pos.y == pv1->pos.y ) // natural flat top
+	{
+		// sorting top vertices by x
+		if ( pv1->pos.x < pv0->pos.x ) std::swap( pv0, pv1 );
+		DrawFlatTopTriangleTexWrap( *pv0, *pv1, *pv2, tex );
+	}
+	else if ( pv1->pos.y == pv2->pos.y ) // natural flat bottom
+	{
+		// sorting bottom vertices by x
+		if ( pv2->pos.x < pv1->pos.x ) std::swap( pv1, pv2 );
+		DrawFlatBottomTriangleTexWrap( *pv0, *pv1, *pv2, tex );
+	}
+	else // general triangle
+	{
+		// find splitting vertex
+		const float alphaSplit =
+			( pv1->pos.y - pv0->pos.y ) /
+			( pv2->pos.y - pv0->pos.y );
+		const TextureVertex vi = pv0->GetInterpolationTo( *pv2, alphaSplit );
+
+		if ( pv1->pos.x < vi.pos.x ) // major right
+		{
+			DrawFlatBottomTriangleTexWrap( *pv0, *pv1, vi, tex );
+			DrawFlatTopTriangleTexWrap( *pv1, vi, *pv2, tex );
+		}
+		else // major left
+		{
+			DrawFlatBottomTriangleTexWrap( *pv0, vi, *pv1, tex );
+			DrawFlatTopTriangleTexWrap( vi, *pv1, *pv2, tex );
+		}
+	}
+}
+
 void Graphics::DrawFlatTopTriangle( const Vec2& v0, const Vec2& v1, const Vec2& v2, Color c )
 {
 	// calulcate slopes in screen space
@@ -593,6 +639,76 @@ void Graphics::DrawFlatTriangleTex( const TextureVertex& v0, const TextureVertex
 			PutPixel( x, y, tex.GetPixel(
 				int( std::min( itcLine.x * tex_width, tex_clamp_x ) ),
 				int( std::min( itcLine.y * tex_height, tex_clamp_y ) ) ) );
+			// need std::min b/c tc.x/y == 1.0, we'll read off edge of tex
+			// and with fp err, tc.x/y can be > 1.0 (by a tiny amount)
+		}
+	}
+}
+void Graphics::DrawFlatTopTriangleTexWrap( const TextureVertex& v0, const TextureVertex& v1, const TextureVertex& v2, const Surface& tex )
+{
+	// calulcate dVertex / dy
+	const float delta_y = v2.pos.y - v0.pos.y;
+	const TextureVertex dv0 = ( v2 - v0 ) / delta_y;
+	const TextureVertex dv1 = ( v2 - v1 ) / delta_y;
+
+	// create right edge interpolant
+	TextureVertex itEdge1 = v1;
+
+	// call the flat triangle render routine
+	DrawFlatTriangleTexWrap( v0, v1, v2, tex, dv0, dv1, itEdge1 );
+}
+
+void Graphics::DrawFlatBottomTriangleTexWrap( const TextureVertex& v0, const TextureVertex& v1, const TextureVertex& v2, const Surface& tex )
+{
+	// calulcate dVertex / dy
+	const float delta_y = v2.pos.y - v0.pos.y;
+	const TextureVertex dv0 = ( v1 - v0 ) / delta_y;
+	const TextureVertex dv1 = ( v2 - v0 ) / delta_y;
+
+	// create right edge interpolant
+	TextureVertex itEdge1 = v0;
+
+	// call the flat triangle render routine
+	DrawFlatTriangleTexWrap( v0, v1, v2, tex, dv0, dv1, itEdge1 );
+}
+
+void Graphics::DrawFlatTriangleTexWrap( const TextureVertex& v0, const TextureVertex& v1, const TextureVertex& v2, const Surface& tex,
+	const TextureVertex& dv0, const TextureVertex& dv1, TextureVertex& itEdge1 )
+{
+	// create edge interpolant for left edge (always v0)
+	TextureVertex itEdge0 = v0;
+
+	// calculate start and end scanlines
+	const int yStart = (int)ceil( v0.pos.y - 0.5f );
+	const int yEnd = (int)ceil( v2.pos.y - 0.5f ); // the scanline AFTER the last line drawn
+
+	// do interpolant prestep
+	itEdge0 += dv0 * ( float( yStart ) + 0.5f - v0.pos.y );
+	itEdge1 += dv1 * ( float( yStart ) + 0.5f - v0.pos.y );
+
+	// init tex width/height and clamp values
+	const float tex_width = float( tex.GetWidth() );
+	const float tex_height = float( tex.GetHeight() );
+	const float tex_clamp_x = tex_width - 1.0f;
+	const float tex_clamp_y = tex_height - 1.0f;
+
+	for ( int y = yStart; y < yEnd; y++, itEdge0 += dv0, itEdge1 += dv1 )
+	{
+		// calculate start and end pixels
+		const int xStart = (int)ceil( itEdge0.pos.x - 0.5f );
+		const int xEnd = (int)ceil( itEdge1.pos.x - 0.5f ); // the pixel AFTER the last pixel drawn
+
+		// calculate scanline dTexCoord / dx
+		const Vec2 dtcLine = ( itEdge1.tc - itEdge0.tc ) / ( itEdge1.pos.x - itEdge0.pos.x );
+
+		// create scanline tex coord interpolant and prestep
+		Vec2 itcLine = itEdge0.tc + dtcLine * ( float( xStart ) + 0.5f - itEdge0.pos.x );
+
+		for ( int x = xStart; x < xEnd; x++, itcLine += dtcLine )
+		{
+			PutPixel( x, y, tex.GetPixel(
+				int( std::fmod( itcLine.x * tex_width, tex_clamp_x ) ),
+				int( std::fmod( itcLine.y * tex_height, tex_clamp_y ) ) ) );
 			// need std::min b/c tc.x/y == 1.0, we'll read off edge of tex
 			// and with fp err, tc.x/y can be > 1.0 (by a tiny amount)
 		}

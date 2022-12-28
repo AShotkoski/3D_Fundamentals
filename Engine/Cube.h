@@ -8,25 +8,25 @@
 class Cube
 {
 public:
-	Cube( float size )
+	Cube( float size, float texDim )
 	{
 		float pt = size / 2.f;
 		verts.emplace_back(-pt,  pt, -pt); //0
-		tcs.emplace_back( 0.f, 1.f );
+		tcs.emplace_back( 0.f, texDim );
 		verts.emplace_back( pt,  pt, -pt); //1
-		tcs.emplace_back( 1.f, 1.f );
+		tcs.emplace_back( texDim, texDim );
 		verts.emplace_back( pt,  pt,  pt); //2
-		tcs.emplace_back( 0.f, 1.f );
+		tcs.emplace_back( 0.f, texDim );
 		verts.emplace_back(-pt,  pt,  pt); //3
-		tcs.emplace_back( 1.f, 1.f );
+		tcs.emplace_back( texDim, texDim );
 		verts.emplace_back(-pt, -pt,  pt); //4
-		tcs.emplace_back( 1.f, 0.f );
+		tcs.emplace_back( texDim, 0.f );
 		verts.emplace_back( pt, -pt,  pt); //5
 		tcs.emplace_back( 0.f, 0.f );
 		verts.emplace_back( pt, -pt, -pt); //6
 		tcs.emplace_back( 0.f, 0.f );
 		verts.emplace_back(-pt, -pt, -pt); //7
-		tcs.emplace_back( 1.f, 0.f );
+		tcs.emplace_back( texDim, 0.f );
 	}
 
 	IndexedLineList GetLines() const

@@ -8,6 +8,8 @@ class TextureMappedCubeScene : public Scene
 {
 public:
 	TextureMappedCubeScene()
+		:
+		cube(1.f,2.f)
 	{
 
 	};
@@ -80,7 +82,7 @@ public:
 		{	
 			if ( tris.cullFlags[i / 3] )
 			{
-				gfx.DrawTriangleTex( tris.verticies[tris.indicies[i]],
+				gfx.DrawTriangleTexWrap( tris.verticies[tris.indicies[i]],
 					tris.verticies[tris.indicies[i + 1]],
 					tris.verticies[tris.indicies[i + 2]],
 					tex );
@@ -90,8 +92,8 @@ public:
 
 private:
 	PubeScreenTransformer pube;
-	Cube cube = ( 1.f );
-
+	Cube cube;
+	
 	const float dTheta = PI / 4;
 	float zOffset = 2.f;
 	float xRot = 0.f;
