@@ -2,21 +2,19 @@
 #include <vector>
 #include "Vec3.h"
 
-//verticies, indicies
+//vertices, indices
 template <class T>
 class IndexedTriangleList
 {
 public:
 	IndexedTriangleList( std::vector<T> verts, std::vector<size_t> inds )
 		:
-		verticies( std::move( verts ) ),
-		indicies( std::move( inds ) )
+		vertices( std::move( verts ) ),
+		indices( std::move( inds ) )
 	{
-		assert( verticies.size() > 2 );
-		assert( indicies.size() % 3 == 0 );
-		cullFlags.resize( indicies.size() / 3, false );
+		assert( vertices.size() > 2 );
+		assert( indices.size() % 3 == 0 );
 	}
-	std::vector<T> verticies;
-	std::vector<size_t> indicies;
-	std::vector<bool> cullFlags;
+	std::vector<T> vertices;
+	std::vector<size_t> indices;
 };

@@ -3,80 +3,68 @@
 #include <vector>
 #include "IndexedLineList.h"
 #include "IndexedTriangleList.h"
-#include "TextureVertex.h"
 
 class Cube
 {
 public:
-	Cube( float size, float texDim )
+	template <class V>
+	static IndexedTriangleList<V> GetSkinned( float size )
 	{
-		float pt = size / 2.f;
-		verts.emplace_back(-pt,  pt, -pt); //0
-		tcs.emplace_back( 0.f, texDim );
-		verts.emplace_back( pt,  pt, -pt); //1
-		tcs.emplace_back( texDim, texDim );
-		verts.emplace_back( pt,  pt,  pt); //2
-		tcs.emplace_back( 0.f, texDim );
-		verts.emplace_back(-pt,  pt,  pt); //3
-		tcs.emplace_back( texDim, texDim );
-		verts.emplace_back(-pt, -pt,  pt); //4
-		tcs.emplace_back( texDim, 0.f );
-		verts.emplace_back( pt, -pt,  pt); //5
-		tcs.emplace_back( 0.f, 0.f );
-		verts.emplace_back( pt, -pt, -pt); //6
-		tcs.emplace_back( 0.f, 0.f );
-		verts.emplace_back(-pt, -pt, -pt); //7
-		tcs.emplace_back( texDim, 0.f );
-	}
+		const float side = size / 2.0f;
+		const auto ConvertTexCoord = []( float u, float v )
+		{
+			return Vec2{ ( u + 1.0f ) / 3.0f,v / 4.0f };
+		};
 
-	IndexedLineList GetLines() const
-	{
-		return
+		std::vector<Vec3> vertices;
+		std::vector<Vec2> tc;
+
+		vertices.emplace_back( -side, -side, -side ); // 0
+		tc.emplace_back( ConvertTexCoord( 1.0f, 0.0f ) );
+		vertices.emplace_back( side, -side, -side ); // 1
+		tc.emplace_back( ConvertTexCoord( 0.0f, 0.0f ) );
+		vertices.emplace_back( -side, side, -side ); // 2
+		tc.emplace_back( ConvertTexCoord( 1.0f, 1.0f ) );
+		vertices.emplace_back( side, side, -side ); // 3
+		tc.emplace_back( ConvertTexCoord( 0.0f, 1.0f ) );
+		vertices.emplace_back( -side, -side, side ); // 4
+		tc.emplace_back( ConvertTexCoord( 1.0f, 3.0f ) );
+		vertices.emplace_back( side, -side, side ); // 5
+		tc.emplace_back( ConvertTexCoord( 0.0f, 3.0f ) );
+		vertices.emplace_back( -side, side, side ); // 6
+		tc.emplace_back( ConvertTexCoord( 1.0f, 2.0f ) );
+		vertices.emplace_back( side, side, side ); // 7
+		tc.emplace_back( ConvertTexCoord( 0.0f, 2.0f ) );
+		vertices.emplace_back( -side, -side, -side ); // 8
+		tc.emplace_back( ConvertTexCoord( 1.0f, 4.0f ) );
+		vertices.emplace_back( side, -side, -side ); // 9
+		tc.emplace_back( ConvertTexCoord( 0.0f, 4.0f ) );
+		vertices.emplace_back( -side, -side, -side ); // 10
+		tc.emplace_back( ConvertTexCoord( 2.0f, 1.0f ) );
+		vertices.emplace_back( -side, -side, side ); // 11
+		tc.emplace_back( ConvertTexCoord( 2.0f, 2.0f ) );
+		vertices.emplace_back( side, -side, -side ); // 12
+		tc.emplace_back( ConvertTexCoord( -1.0f, 1.0f ) );
+		vertices.emplace_back( side, -side, side ); // 13
+		tc.emplace_back( ConvertTexCoord( -1.0f, 2.0f ) );
+
+		std::vector<V> verts( vertices.size() );
+		for ( size_t i = 0; i < vertices.size(); i++ )
 		{
-			verts,{
-				0,1,  0,3,  1,2,  2,3,
-				0,7,  1,6,  2,5,  3,4,
-				7,6,  6,5,  5,4,  4,7
-				}
-		};
-	}
-	IndexedTriangleList<Vec3> GetTriangles() const
-	{
-		return
-		{
-			verts,{
-				0,6,7,  0,1,6,
-				3,1,0,  3,2,1,
-				1,5,6,  1,2,5,
-				2,4,5,  2,3,4,
-				3,7,4,  3,0,7,
-				7,5,4,  7,6,5
-				}
-		};
-	}
-	IndexedTriangleList<TextureVertex> GetTexTriangles() const
-	{
-		std::vector<TextureVertex> ret;
-		ret.reserve( verts.size() );
-		for ( size_t i = 0; i < verts.size(); i++ )
-		{
-			ret.emplace_back( verts[i], tcs[i] );
+			verts[i].pos = vertices[i];
+			verts[i].t = tc[i];
 		}
-
-		return
-		{
-			std::move(ret),{
-				0,6,7,  0,1,6,
-				3,1,0,  3,2,1,
-				1,5,6,  1,2,5,
-				2,4,5,  2,3,4,
-				3,7,4,  3,0,7,
-				7,5,4,  7,6,5
+		return{
+			std::move( verts ),{
+				0,2,1,   2,3,1,
+				4,8,5,   5,8,9,
+				2,6,3,   3,6,7,
+				4,5,7,   4,7,6,
+				2,10,11, 2,11,6,
+				12,3,7,  12,7,13
 				}
 		};
-	}
 
-public:
-	std::vector<Vec2> tcs;
-	std::vector<Vec3> verts;
+
+	}
 };

@@ -50,7 +50,7 @@ public:
 	}
 	static _Mat3 Identity()
 	{
-		_Mat3 i = { (T)1.0,(T)0.0,(T)0.0
+		_Mat3 i = { (T)1.0,(T)0.0,(T)0.0,
 					(T)0.0,(T)1.0,(T)0.0,
 					(T)0.0,(T)0.0,(T)1.0 };
 		return i;

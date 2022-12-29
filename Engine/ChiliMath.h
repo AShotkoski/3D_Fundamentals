@@ -36,3 +36,9 @@ inline auto ClampAngle( T angle )
 	auto mod = fmod( (T)angle, 2 * (T)PI );
 	return mod;
 }
+
+template <class T>
+inline T interpolate( const T& lhs, const T& rhs, float alpha )
+{
+	return lhs + ( rhs - lhs ) * alpha;
+}

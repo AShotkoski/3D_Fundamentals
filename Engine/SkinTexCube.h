@@ -3,11 +3,19 @@
 #include "Cube.h"
 #include "Mat3.h"
 #include "PubeScreenTransformer.h"
+#include "Pipeline.h"
 
-class WireframeCubeScene : public Scene
+class SkinTexCube : public Scene
 {
 public:
-	WireframeCubeScene() = default;
+	SkinTexCube(Graphics& gfx)
+		:
+		Scene( "Solid cube scene" ),
+		tlist(Cube::GetSkinned<Pipeline::Vertex>(1.f)),
+		pipe(gfx)
+	{
+		pipe.BindTexture( L"sprites\\mcgrass.jpg" );
+	}
 	void Update( Keyboard& kbd, Mouse& mouse, float dt ) override
 	{
 		if ( kbd.KeyIsPressed( 'Q' ) )
@@ -44,40 +52,17 @@ public:
 		}
 
 	}
-	void Draw( Graphics& gfx ) const override
+	void Draw( ) override
 	{
-
-		auto lines = cube.GetLines();
-		const auto rot = Mat3::RotationX( xRot ) * Mat3::RotationY( yRot ) * Mat3::RotationZ( zRot );
-
-		//Transform verticies from object space to world/view space
-		for ( auto& v : lines.verticies )
-		{
-			v *= rot;
-			v += {0.f, 0.f, zOffset};
-		}
-
-
-		//Transform to screen space
-		for ( auto& v : lines.verticies )
-		{
-			pube.Transform( v );
-		}
-
-		//draw the triangles (cube)
-		for ( int i = 0; i < lines.indicies.size(); i += 2 )
-		{
-			gfx.DrawLine( lines.verticies[lines.indicies[i]],
-							  lines.verticies[lines.indicies[i + 1]],
-				Colors::Red );
-	
-		}
+		pipe.BindRotation( Mat3::RotationX( xRot ) * Mat3::RotationY( yRot ) * Mat3::RotationZ( zRot ) );
+		pipe.BindTranslation( { 0.f,0.f,zOffset } );
+		pipe.Draw( tlist );
 
 	}
-
-private:
-	PubeScreenTransformer pube;
-	Cube cube = Cube( 1.f, 1.f );
+	
+private:	
+	Pipeline pipe;
+	IndexedTriangleList<Pipeline::Vertex> tlist;
 
 	const float dTheta = PI / 4;
 	float zOffset = 2.f;

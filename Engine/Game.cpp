@@ -21,18 +21,14 @@
 #include "MainWindow.h"
 #include "Game.h"
 #include "Mat3.h"
-#include "SolidCubeScene.h"
-#include "WireframeCubeScene.h"
-#include "TextureMappedCubeScene.h"
+#include "SkinTexCube.h"
 
 Game::Game( MainWindow& wnd )
 	:
 	wnd( wnd ),
 	gfx( wnd )
 {
-	scenes.emplace_back( std::make_unique<SolidCubeScene>() );
-	scenes.emplace_back( std::make_unique<WireframeCubeScene>() );
-	scenes.emplace_back( std::make_unique<TextureMappedCubeScene>() );
+	scenes.emplace_back( std::make_unique<SkinTexCube>(gfx) );
 	currScene = scenes.begin();
 }
 
@@ -72,5 +68,5 @@ void Game::CycleScenes()
 
 void Game::ComposeFrame()
 {
-	( *currScene )->Draw( gfx );
+	( *currScene )->Draw( );
 }

@@ -84,20 +84,17 @@
     <ClInclude Include="PubeScreenTransformer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="TextureVertex.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Scene.h">
       <Filter>Header Files\Scenes</Filter>
     </ClInclude>
-    <ClInclude Include="WireframeCubeScene.h">
+    <ClInclude Include="SkinTexCube.h">
       <Filter>Header Files\Scenes</Filter>
     </ClInclude>
-    <ClInclude Include="TextureMappedCubeScene.h">
-      <Filter>Header Files\Scenes</Filter>
+    <ClInclude Include="Pipeline.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="SolidCubeScene.h">
-      <Filter>Header Files\Scenes</Filter>
+    <ClInclude Include="Triangle.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

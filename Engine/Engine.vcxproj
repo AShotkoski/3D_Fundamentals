@@ -141,7 +141,8 @@
     <ClInclude Include="ChiliWin.h" />
     <ClInclude Include="Colors.h" />
     <ClInclude Include="Cube.h" />
-    <ClInclude Include="SolidCubeScene.h" />
+    <ClInclude Include="Pipeline.h" />
+    <ClInclude Include="SkinTexCube.h" />
     <ClInclude Include="DXErr.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GDIPlusManager.h" />
@@ -158,10 +159,8 @@
     <ClInclude Include="Resource.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="Surface.h" />
-    <ClInclude Include="TextureMappedCubeScene.h" />
-    <ClInclude Include="TextureVertex.h" />
+    <ClInclude Include="Triangle.h" />
     <ClInclude Include="Vec2.h" />
-    <ClInclude Include="WireframeCubeScene.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DXErr.cpp" />
