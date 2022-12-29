@@ -10,7 +10,7 @@ class SkinTexCube : public Scene
 public:
 	SkinTexCube(Graphics& gfx)
 		:
-		Scene( "Solid cube scene" ),
+		Scene( "Minecraft grass block scene" ),
 		tlist(Cube::GetSkinned<Pipeline::Vertex>(1.f)),
 		pipe(gfx)
 	{

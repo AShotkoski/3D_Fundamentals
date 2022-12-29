@@ -50,20 +50,38 @@ void Game::UpdateModel()
 
 		if(e.GetCode() == VK_TAB && e.IsPress() )
 		{
-			CycleScenes();
+			
+			CycleScenes( wnd.kbd.KeyIsPressed( VK_SHIFT ) ? true : false);
 		}
+		
 	}
 
 	( *currScene )->Update( wnd.kbd, wnd.mouse, dt );
 	
 }
 
-void Game::CycleScenes()
+void Game::CycleScenes(bool backwards)
 {
-	if ( ++currScene == scenes.end() )
+	if ( !backwards )
 	{
-		currScene = scenes.begin();
+		if ( ++currScene == scenes.end() )
+		{
+			currScene = scenes.begin();
+		}
 	}
+	else
+	{
+		if ( currScene == scenes.begin() )
+		{
+			currScene = std::prev(scenes.end());
+		}
+		else
+		{
+			--currScene;
+		}
+	}
+	OutputDebugStringA( ( *currScene )->GetName().c_str() );
+	OutputDebugStringA( "\n" );
 }
 
 void Game::ComposeFrame()
