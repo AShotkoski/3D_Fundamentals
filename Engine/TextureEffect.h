@@ -80,9 +80,10 @@ public:
 		template <typename Input>
 		Color operator()( Input& in )
 		{
+			assert( isTexBound );
 			return pTex->GetPixel(
-				(unsigned int)std::min( iLine.t.x * tex_width + 0.5f, tex_xclamp ),
-				(unsigned int)std::min( iLine.t.y * tex_height + 0.5f, tex_yclamp )
+				(unsigned int)std::min( in.t.x * tex_width + 0.5f, tex_xclamp ),
+				(unsigned int)std::min( in.t.y * tex_height + 0.5f, tex_yclamp ));
 		}
 		void BindTexture(const std::wstring filename)
 		{
@@ -92,6 +93,7 @@ public:
 			tex_height = float( pTex->GetHeight() );
 			tex_xclamp = tex_width - 1.0f;
 			tex_yclamp = tex_height - 1.0f;
+			isTexBound = true;
 		}
 	private:
 		// prepare clamping constants
@@ -101,6 +103,7 @@ public:
 		float tex_height;
 		float tex_xclamp;
 		float tex_yclamp;
+		bool isTexBound = false;
 	};
 public:
 	PixelShader ps;

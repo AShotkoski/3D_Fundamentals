@@ -220,7 +220,7 @@ private:
 			for ( int x = xStart; x < xEnd; x++, iLine += diLine )
 			{
 				// perform texture lookup, clamp, and write pixel
-				gfx.PutPixel( x, y, ps(iLine)) );
+				gfx.PutPixel( x, y, effect.ps(iLine) );
 			}
 		}
 	}
