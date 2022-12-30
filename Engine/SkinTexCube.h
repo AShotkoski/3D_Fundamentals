@@ -8,8 +8,9 @@
 
 class SkinTexCube : public Scene
 {
-public:
-	typedef typename Pipeline<TextureEffect>::Vertex Vertex;
+public:	
+	typedef Pipeline<TextureEffect> Pipeline;
+	typedef Pipeline::Vertex Vertex;
 public:
 	SkinTexCube(Graphics& gfx)
 		:
@@ -17,7 +18,7 @@ public:
 		tlist(Cube::GetSkinned<Vertex>(1.f)),
 		pipe(gfx)
 	{
-		tEffect.ps.BindTexture( L"sprites\\mcgrass.jpg" );
+		pipe.effect.ps.BindTexture( L"sprites\\mcgrass.jpg" );
 	}
 	void Update( Keyboard& kbd, Mouse& mouse, float dt ) override
 	{
@@ -64,8 +65,7 @@ public:
 	}
 	
 private:	
-	Pipeline<TextureEffect> pipe;
-	TextureEffect tEffect;
+	Pipeline pipe;
 	IndexedTriangleList<Vertex> tlist;
 
 	const float dTheta = PI / 4;

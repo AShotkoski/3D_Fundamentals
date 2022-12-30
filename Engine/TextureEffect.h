@@ -87,7 +87,7 @@ public:
 		}
 		void BindTexture(const std::wstring filename)
 		{
-			pTex = std::make_unique<Surface>(Surface::FromFile(filename));
+			pTex = std::make_unique<Surface>( Surface::FromFile( filename ) );
 
 			tex_width = float( pTex->GetWidth() );
 			tex_height = float( pTex->GetHeight() );
