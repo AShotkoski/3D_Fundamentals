@@ -1,23 +1,24 @@
 #pragma once
-#pragma once
 #include "Scene.h"
 #include "Cube.h"
 #include "Mat3.h"
 #include "PubeScreenTransformer.h"
 #include "Pipeline.h"
+#include "TextureEffect.h"
 
 class TriangleScene : public Scene
 {
 public:
-	typedef Pipeline::Vertex Vertex;
+	typedef typename Pipeline<TextureEffect>::Vertex Vertex;
 public:
 	TriangleScene( Graphics& gfx )
 		:
 		Scene( "Triangle Scene" ),
 		pipe( gfx )
 	{
-		pipe.BindTexture( L"sprites\\mcgrass.jpg" );
+		tEffect.ps.BindTexture( L"sprites\\mcgrass.jpg" );
 	}
+
 	void Update( Keyboard& kbd, Mouse& mouse, float dt ) override
 	{
 		if ( kbd.KeyIsPressed( 'Q' ) )
@@ -75,7 +76,8 @@ public:
 	}
 
 private:
-	Pipeline pipe;
+	Pipeline<TextureEffect> pipe;
+	TextureEffect tEffect;
 	const float dTheta = PI / 4;
 	float zOffset = 2.f;
 	float xRot = 0.f;

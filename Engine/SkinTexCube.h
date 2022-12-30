@@ -4,11 +4,12 @@
 #include "Mat3.h"
 #include "PubeScreenTransformer.h"
 #include "Pipeline.h"
+#include "TextureEffect.h"
 
 class SkinTexCube : public Scene
 {
 public:
-	typedef Pipeline::Vertex Vertex;
+	typedef typename Pipeline<TextureEffect>::Vertex Vertex;
 public:
 	SkinTexCube(Graphics& gfx)
 		:
@@ -16,7 +17,7 @@ public:
 		tlist(Cube::GetSkinned<Vertex>(1.f)),
 		pipe(gfx)
 	{
-		pipe.BindTexture( L"sprites\\mcgrass.jpg" );
+		tEffect.ps.BindTexture( L"sprites\\mcgrass.jpg" );
 	}
 	void Update( Keyboard& kbd, Mouse& mouse, float dt ) override
 	{
@@ -63,7 +64,8 @@ public:
 	}
 	
 private:	
-	Pipeline pipe;
+	Pipeline<TextureEffect> pipe;
+	TextureEffect tEffect;
 	IndexedTriangleList<Vertex> tlist;
 
 	const float dTheta = PI / 4;

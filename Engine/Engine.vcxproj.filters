@@ -19,6 +19,9 @@
     <Filter Include="Header Files\Scenes">
       <UniqueIdentifier>{fe0a9604-dda1-4d58-bdae-9f3dbd980891}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Effect">
+      <UniqueIdentifier>{85d3237b-d483-4f27-a795-a49ca38a6e86}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ChiliWin.h">
@@ -98,6 +101,9 @@
     </ClInclude>
     <ClInclude Include="TriangleScene.h">
       <Filter>Header Files\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="TextureEffect.h">
+      <Filter>Header Files\Effect</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
