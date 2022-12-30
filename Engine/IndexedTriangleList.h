@@ -7,6 +7,7 @@ template <class T>
 class IndexedTriangleList
 {
 public:
+	IndexedTriangleList() = default;
 	IndexedTriangleList( std::vector<T> verts, std::vector<size_t> inds )
 		:
 		vertices( std::move( verts ) ),

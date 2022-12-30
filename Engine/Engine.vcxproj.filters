@@ -96,6 +96,9 @@
     <ClInclude Include="Triangle.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="TriangleScene.h">
+      <Filter>Header Files\Scenes</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DXErr.cpp">

@@ -22,6 +22,7 @@
 #include "Game.h"
 #include "Mat3.h"
 #include "SkinTexCube.h"
+#include "TriangleScene.h"
 
 Game::Game( MainWindow& wnd )
 	:
@@ -29,6 +30,7 @@ Game::Game( MainWindow& wnd )
 	gfx( wnd )
 {
 	scenes.emplace_back( std::make_unique<SkinTexCube>(gfx) );
+	scenes.emplace_back( std::make_unique<TriangleScene>(gfx) );
 	currScene = scenes.begin();
 }
 

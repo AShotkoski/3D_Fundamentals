@@ -1,20 +1,20 @@
 #pragma once
+#pragma once
 #include "Scene.h"
 #include "Cube.h"
 #include "Mat3.h"
 #include "PubeScreenTransformer.h"
 #include "Pipeline.h"
 
-class SkinTexCube : public Scene
+class TriangleScene : public Scene
 {
 public:
 	typedef Pipeline::Vertex Vertex;
 public:
-	SkinTexCube(Graphics& gfx)
+	TriangleScene( Graphics& gfx )
 		:
-		Scene( "Minecraft grass block scene" ),
-		tlist(Cube::GetSkinned<Vertex>(1.f)),
-		pipe(gfx)
+		Scene( "Triangle Scene" ),
+		pipe( gfx )
 	{
 		pipe.BindTexture( L"sprites\\mcgrass.jpg" );
 	}
@@ -54,18 +54,28 @@ public:
 		}
 
 	}
-	void Draw( ) override
+	void Draw() override
 	{
+		IndexedTriangleList<Vertex> tlist{
+			{
+
+				Vertex{Vec3{0.f,1.f,zOffset}, Vec2{0,0.f}},
+				Vertex{Vec3{0.5f,0.5f,zOffset}, Vec2{1.f,0.f}},
+				Vertex{Vec3{-0.5f,-0.5f,zOffset}, Vec2{1.f,1.f}}
+
+			},
+			{0,1,2}
+		};
+		
+
 		pipe.BindRotation( Mat3::RotationX( xRot ) * Mat3::RotationY( yRot ) * Mat3::RotationZ( zRot ) );
 		pipe.BindTranslation( { 0.f,0.f,zOffset } );
 		pipe.Draw( tlist );
 
 	}
-	
-private:	
-	Pipeline pipe;
-	IndexedTriangleList<Vertex> tlist;
 
+private:
+	Pipeline pipe;
 	const float dTheta = PI / 4;
 	float zOffset = 2.f;
 	float xRot = 0.f;
