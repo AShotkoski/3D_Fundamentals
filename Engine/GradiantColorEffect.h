@@ -2,31 +2,29 @@
 
 #include "Pipeline.h"
 
-class SolidColorEffect
+class GradiantColorEffect
 {
 public:
 	class Vertex
 	{
 	public:
 		Vertex() = default;
-		Vertex( const Vec3& pos )
+		Vertex( const Vec3& pos, const Vec3& col )
 			:
-			pos( pos )
+			pos( pos ),
+			color(col)
 		{}
 		// this enables template functions clone a vertex
 		// while changing the pos only
 		Vertex( const Vec3& pos, const Vertex& src )
 			:
+			color( src.color ),
 			pos( pos )
 		{}
-		Vertex( const Vec3& pos, const Vec2& t )
-			:
-			pos( pos )
-		{}
-		
 		Vertex& operator+=( const Vertex& rhs )
 		{
 			pos += rhs.pos;
+			color += rhs.color;
 			return *this;
 		}
 		Vertex operator+( const Vertex& rhs ) const
@@ -36,6 +34,7 @@ public:
 		Vertex& operator-=( const Vertex& rhs )
 		{
 			pos -= rhs.pos;
+			color -= rhs.color;
 			return *this;
 		}
 		Vertex operator-( const Vertex& rhs ) const
@@ -45,6 +44,7 @@ public:
 		Vertex& operator*=( float rhs )
 		{
 			pos *= rhs;
+			color *= rhs;
 			return *this;
 		}
 		Vertex operator*( float rhs ) const
@@ -54,6 +54,7 @@ public:
 		Vertex& operator/=( float rhs )
 		{
 			pos /= rhs;
+			color /= rhs;
 			return *this;
 		}
 		Vertex operator/( float rhs ) const
@@ -62,7 +63,9 @@ public:
 		}
 	public:
 		Vec3 pos;
+		Vec3 color;
 	};
+
 
 	// invoked for each pixel of a triangle
 	// takes an input of attributes that are the
@@ -74,15 +77,11 @@ public:
 		template <typename Input>
 		Color operator()( Input& in )
 		{
-			return c;
-		}
-		void BindColor( Color c )
-		{
-			this->c = c;
+			
+			return Color(in.color);
 		}
 	private:
-		// prepare clamping constants
-		Color c;
+		
 	};
 public:
 	PixelShader ps;

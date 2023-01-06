@@ -8,8 +8,7 @@
 #include "Mat3.h"
 #include <algorithm>
 
-// fixed-function triangle drawing pipeline
-// draws textured triangle lists with clamping
+
 template <class Effect>
 class Pipeline
 {
