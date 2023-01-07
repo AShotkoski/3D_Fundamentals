@@ -218,8 +218,11 @@ private:
 
 			for ( int x = xStart; x < xEnd; x++, iLine += diLine )
 			{
+				//reset pos z back to non inverse form
+				const auto attr = iLine / iLine.pos.z;
+
 				// perform texture lookup, clamp, and write pixel
-				gfx.PutPixel( x, y, effect.ps(iLine) );
+				gfx.PutPixel( x, y, effect.ps(attr) );
 			}
 		}
 	}

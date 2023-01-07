@@ -14,8 +14,17 @@ public:
 	Vertex& Transform( Vertex& v ) const
 	{
 		const float zInv = 1.f / v.pos.z;
-		v.pos.x = (1.f + v.pos.x * zInv ) * xFactor;
-		v.pos.y = (1.f  - v.pos.y * zInv ) * yFactor;
+
+		//divide everthing (think tc) by z inv, this lets us interpolate over the inverse version and 
+		//get textures that aren't fucked
+		v *= zInv;
+
+		v.pos.x = (1.f + v.pos.x ) * xFactor;
+		v.pos.y = (1.f  - v.pos.y ) * yFactor;
+
+		//store the inverse of z in v pos z;
+		v.pos.z = zInv;
+
 		return v;
 	}
 
