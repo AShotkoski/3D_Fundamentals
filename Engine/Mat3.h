@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Vec3.h"
+#include "ChiliMath.h"
 
 template <typename T>
 class _Mat3
@@ -93,6 +94,17 @@ public:
 			(T)1, (T)0, (T)0,
 			(T)0,   ct,   st,
 			(T)0,  -st,   ct
+		};
+	}
+	static _Mat3 RotationArbitrary( T angle, _Vec3<T> axis )
+	{
+		const T st = (T)sin( angle );
+		const T ct = (T)cos( angle );
+
+		return _Mat3{
+			ct + sq( axis.x ) * ( 1 - ct ),			     axis.x * axis.y * ( 1 - ct ) - axis.z * st,  axis.x * axis.y * ( 1 - ct ) + axis.y * st,
+			axis.x * axis.y * ( 1 - ct ) + axis.z * st,  ct + sq( axis.y ) * ( 1 - ct ),		  	  axis.y * axis.z * ( 1 - ct ) - axis.x * st,
+			axis.z * axis.x * ( 1 - ct ) - axis.y * st,  axis.z * axis.y * ( 1 - ct ) + axis.x * st,  ct + sq( axis.z ) * ( 1 - ct )
 		};
 	}
 public:

@@ -28,7 +28,7 @@ public:
 	}
 	T		Len() const
 	{
-		return sqrt( LenSq() );
+		return (T)sqrt( LenSq() );
 	}
 	_Vec3&  Normalize()
 	{
