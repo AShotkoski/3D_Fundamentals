@@ -83,9 +83,9 @@ private:
 	void PostProcessTriangleVertices( Triangle<Vertex>& triangle )
 	{
 		// perspective divide and screen transform for all 3 vertices
-		pst.Transform( triangle.v0.pos );
-		pst.Transform( triangle.v1.pos );
-		pst.Transform( triangle.v2.pos );
+		pst.Transform( triangle.v0 );
+		pst.Transform( triangle.v1 );
+		pst.Transform( triangle.v2 );
 
 		// draw the triangle
 		DrawTriangle( triangle );
