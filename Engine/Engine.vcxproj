@@ -142,6 +142,7 @@
     <ClInclude Include="Colors.h" />
     <ClInclude Include="Cube.h" />
     <ClInclude Include="GradiantColorEffect.h" />
+    <ClInclude Include="GradiantCubeScene.h" />
     <ClInclude Include="Pipeline.h" />
     <ClInclude Include="SkinTexCube.h" />
     <ClInclude Include="DXErr.h" />

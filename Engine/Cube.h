@@ -10,7 +10,7 @@ public:
 	template <class V>
 	static IndexedTriangleList<V> GetSkinned( float size )
 	{
-		const float side = size / 2.0f;
+		const float side = size / 2.0f;	
 		const auto ConvertTexCoord = []( float u, float v )
 		{
 			return Vec2{ ( u + 1.0f ) / 3.0f,v / 4.0f };
@@ -65,6 +65,35 @@ public:
 				}
 		};
 
+	}
+
+	template <class V>
+	static IndexedTriangleList<V> GetMinimumVerts( float size = 1.f )
+	{
+		const float side = size / 2.0f;
+
+		std::vector<V> vertices;
+
+		vertices.emplace_back( Vec3(-side, -side, -side ) ); //0
+		vertices.emplace_back( Vec3(side, -side, -side  )); //1
+		vertices.emplace_back( Vec3(-side, side, -side  )); //2
+		vertices.emplace_back( Vec3(side, side, -side   )); //3
+		vertices.emplace_back( Vec3(-side, -side, side  )); //4
+		vertices.emplace_back( Vec3(side, -side, side   )); //5
+		vertices.emplace_back( Vec3(-side, side, side   )); //6
+		vertices.emplace_back( Vec3(side, side, side    )); //7
+
+		return IndexedTriangleList<V>{
+			std::move( vertices ),{
+				0,2,1,   2,3,1,
+				1,3,5,	 3,7,5,
+				5,7,4,	 7,6,4,
+				4,6,2,	 2,0,4,
+				2,6,3,   6,7,3,
+				0,1,4,	 1,5,4
+				}
+		};
 
 	}
+	
 };

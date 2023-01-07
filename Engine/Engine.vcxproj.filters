@@ -105,6 +105,15 @@
     <ClInclude Include="TextureEffect.h">
       <Filter>Header Files\Effect</Filter>
     </ClInclude>
+    <ClInclude Include="SolidColorEffect.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GradiantCubeScene.h">
+      <Filter>Header Files\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="GradiantColorEffect.h">
+      <Filter>Header Files\Effect</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DXErr.cpp">

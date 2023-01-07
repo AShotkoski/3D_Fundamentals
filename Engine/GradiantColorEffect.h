@@ -14,6 +14,11 @@ public:
 			pos( pos ),
 			color(col)
 		{}
+		Vertex( const Vec3& pos )
+			:
+			pos( pos ),
+			color(0,0,0)
+		{}
 		// this enables template functions clone a vertex
 		// while changing the pos only
 		Vertex( const Vec3& pos, const Vertex& src )
