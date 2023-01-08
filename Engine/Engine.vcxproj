@@ -144,6 +144,7 @@
     <ClInclude Include="GradiantColorEffect.h" />
     <ClInclude Include="GradiantCubeScene.h" />
     <ClInclude Include="DeerScene.h" />
+    <ClInclude Include="Miniball.hpp" />
     <ClInclude Include="ObjLoader.h" />
     <ClInclude Include="Pipeline.h" />
     <ClInclude Include="SkinTexCube.h" />

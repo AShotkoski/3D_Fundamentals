@@ -5,7 +5,7 @@
 #include "Pipeline.h"
 #include "SolidColorEffect.h"
 #include "ObjLoader.h"
-
+#include "Miniball.hpp"
 
 class DeerScene : public Scene
 {
