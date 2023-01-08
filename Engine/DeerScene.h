@@ -4,7 +4,7 @@
 #include "PubeScreenTransformer.h"
 #include "Pipeline.h"
 #include "SolidColorEffect.h"
-#include "ObjLoader.h"
+#include "CustomObjLoader.h"
 
 class DeerScene : public Scene
 {
@@ -21,27 +21,10 @@ public:
 	{
 		//Load file
 		//TODO take file path as deerscene param
-		if ( !loader.LoadFile( "objects\\deer.obj" ) )
-		{
-			throw std::runtime_error( "can't find monky obj file" );
-		}
-		tlist.vertices.reserve( loader.LoadedVertices.size() );
-		tlist.indices.reserve( loader.LoadedIndices.size() );
-
-		//this could be better but idc
-		for ( const auto& v : loader.LoadedVertices )
-		{
-			tlist.vertices.emplace_back( Vec3( v.Position.X, v.Position.Y, v.Position.Z ) );
-		}
-		for ( const auto& i : loader.LoadedIndices )
-		{
-			tlist.indices.emplace_back( i );
-		}
-
-
 		
-		pipe.effect.ps.BindColor( Colors::Gray );
+		tlist = customUtil::obj::LoadObj<Vertex>( "objects\\deer.obj" );
 
+		pipe.effect.ps.BindColor( Colors::Gray );
 
 
 	}
@@ -87,8 +70,6 @@ public:
 
 	void Draw() override
 	{
-		
-
 
 		pipe.BindRotation( Mat3::RotationX( xRot ) * Mat3::RotationY( yRot ) * Mat3::RotationZ( zRot ) );
 		pipe.BindTranslation( { 0.f,0.f,zOffset } );
@@ -98,7 +79,7 @@ public:
 
 private:
 	Pipeline pipe;
-	objl::Loader loader;
+
 	IndexedTriangleList<Vertex> tlist;
 	const float dTheta = customUtil::math::PI / 4;
 	float zOffset = 3500.f;
