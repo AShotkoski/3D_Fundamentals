@@ -25,6 +25,8 @@ public:
 
 	void Update( Keyboard& kbd, Mouse& mouse, float dt ) override
 	{
+		using namespace customUtil::math;
+
 		if ( kbd.KeyIsPressed( 'Q' ) )
 		{
 			zRot = (float)ClampAngle( zRot + dt * dTheta );
@@ -82,7 +84,7 @@ public:
 private:
 	Pipeline pipe;
 	IndexedTriangleList<Vertex> tlist;
-	const float dTheta = PI / 4;
+	const float dTheta = customUtil::math::PI / 4;
 	float zOffset = 2.f;
 	float xRot = 0.f;
 	float yRot = 0.f;

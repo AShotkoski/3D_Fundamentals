@@ -5,7 +5,6 @@
 #include "Pipeline.h"
 #include "SolidColorEffect.h"
 #include "ObjLoader.h"
-#include "Miniball.hpp"
 
 class DeerScene : public Scene
 {
@@ -20,6 +19,8 @@ public:
 		Scene( "deer sceme" ),
 		pipe( gfx )
 	{
+		//Load file
+		//TODO take file path as deerscene param
 		if ( !loader.LoadFile( "objects\\deer.obj" ) )
 		{
 			throw std::runtime_error( "can't find monky obj file" );
@@ -27,6 +28,7 @@ public:
 		tlist.vertices.reserve( loader.LoadedVertices.size() );
 		tlist.indices.reserve( loader.LoadedIndices.size() );
 
+		//this could be better but idc
 		for ( const auto& v : loader.LoadedVertices )
 		{
 			tlist.vertices.emplace_back( Vec3( v.Position.X, v.Position.Y, v.Position.Z ) );
@@ -36,11 +38,18 @@ public:
 			tlist.indices.emplace_back( i );
 		}
 
+
+		
 		pipe.effect.ps.BindColor( Colors::Gray );
+
+
+
 	}
 
 	void Update( Keyboard& kbd, Mouse& mouse, float dt ) override
 	{
+		using namespace customUtil::math;
+
 		if ( kbd.KeyIsPressed( 'Q' ) )
 		{
 			zRot = (float)ClampAngle( zRot + dt * dTheta );
@@ -91,7 +100,7 @@ private:
 	Pipeline pipe;
 	objl::Loader loader;
 	IndexedTriangleList<Vertex> tlist;
-	const float dTheta = PI / 4;
+	const float dTheta = customUtil::math::PI / 4;
 	float zOffset = 3500.f;
 	float zMoveSpeed = 2000.f;
 	float xRot = 0.f;

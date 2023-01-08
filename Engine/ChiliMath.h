@@ -21,24 +21,29 @@
 #pragma once
 
 #include <math.h>
-
-constexpr float PI = 3.14159265f;
-
-template <typename T>
-inline auto sq( const T& x )
+namespace customUtil
 {
-	return x * x;
-}
+	namespace math
+	{
+		constexpr float PI = 3.14159265f;
 
-template <typename T>
-inline auto ClampAngle( T angle )
-{
-	auto mod = fmod( (T)angle, 2 * (T)PI );
-	return mod;
-}
+		template <typename T>
+		inline auto sq( const T& x )
+		{
+			return x * x;
+		}
 
-template <class T>
-inline T interpolate( const T& lhs, const T& rhs, float alpha )
-{
-	return lhs + ( rhs - lhs ) * alpha;
-}
+		template <typename T>
+		inline auto ClampAngle( T angle )
+		{
+			auto mod = fmod( (T)angle, 2 * (T)PI );
+			return mod;
+		}
+
+		template <class T>
+		inline T interpolate( const T& lhs, const T& rhs, float alpha )
+		{
+			return lhs + ( rhs - lhs ) * alpha;
+		}
+	};
+};

@@ -128,7 +128,7 @@ private:
 			const float alphaSplit =
 				( pv1->pos.y - pv0->pos.y ) /
 				( pv2->pos.y - pv0->pos.y );
-			const auto vi = interpolate( *pv0, *pv2, alphaSplit );
+			const auto vi = customUtil::math::interpolate( *pv0, *pv2, alphaSplit );
 
 			if ( pv1->pos.x < vi.pos.x ) // major right
 			{
