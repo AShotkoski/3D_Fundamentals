@@ -7,7 +7,7 @@
 #include "ObjLoader.h"
 
 
-class MonkeyScene : public Scene
+class DeerScene : public Scene
 {
 public:
 
@@ -15,12 +15,12 @@ public:
 	typedef Pipeline::Vertex Vertex;
 
 public:
-	MonkeyScene( Graphics& gfx )
+	DeerScene( Graphics& gfx )
 		:
-		Scene( "Momenky sceme" ),
+		Scene( "deer sceme" ),
 		pipe( gfx )
 	{
-		if ( !loader.LoadFile( "objects\\box_stack.obj" ) )
+		if ( !loader.LoadFile( "objects\\deer.obj" ) )
 		{
 			throw std::runtime_error( "can't find monky obj file" );
 		}
@@ -67,11 +67,11 @@ public:
 		}
 		if ( kbd.KeyIsPressed( 'R' ) )
 		{
-			zOffset += dt;
+			zOffset += dt * zMoveSpeed;
 		}
 		if ( kbd.KeyIsPressed( 'F' ) )
 		{
-			zOffset -= dt;
+			zOffset -= dt * zMoveSpeed;
 		}
 
 	}
@@ -92,7 +92,8 @@ private:
 	objl::Loader loader;
 	IndexedTriangleList<Vertex> tlist;
 	const float dTheta = PI / 4;
-	float zOffset = 10.f;
+	float zOffset = 3500.f;
+	float zMoveSpeed = 2000.f;
 	float xRot = 0.f;
 	float yRot = 0.f;
 	float zRot = 0.f;
