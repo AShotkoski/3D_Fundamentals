@@ -20,7 +20,7 @@ public:
 		Scene( "Momenky sceme" ),
 		pipe( gfx )
 	{
-		if ( !loader.LoadFile( "objects\\monkey.obj" ) )
+		if ( !loader.LoadFile( "objects\\box_stack.obj" ) )
 		{
 			throw std::runtime_error( "can't find monky obj file" );
 		}
@@ -35,6 +35,8 @@ public:
 		{
 			tlist.indices.emplace_back( i );
 		}
+
+		pipe.effect.ps.BindColor( Colors::Gray );
 	}
 
 	void Update( Keyboard& kbd, Mouse& mouse, float dt ) override
@@ -90,7 +92,7 @@ private:
 	objl::Loader loader;
 	IndexedTriangleList<Vertex> tlist;
 	const float dTheta = PI / 4;
-	float zOffset = 200.f;
+	float zOffset = 10.f;
 	float xRot = 0.f;
 	float yRot = 0.f;
 	float zRot = 0.f;
