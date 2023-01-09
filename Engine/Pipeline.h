@@ -17,8 +17,13 @@ public:
 public:
 	Pipeline( Graphics& gfx )
 		:
-		gfx( gfx )
+		gfx( gfx ),
+		zbuf(gfx.ScreenWidth,gfx.ScreenHeight)
 	{}
+	void BeginFrame()
+	{
+		zbuf.Clear();
+	}
 	void Draw( IndexedTriangleList<Vertex>& triList )
 	{
 		ProcessVertices( triList.vertices, triList.indices );
@@ -219,11 +224,16 @@ private:
 
 			for ( int x = xStart; x < xEnd; x++, iLine += diLine )
 			{
-				//reset pos z back to non inverse form
-				const auto attr = iLine / iLine.pos.z;
+				const float z = 1.f / iLine.pos.z;
 
-				// perform texture lookup, clamp, and write pixel
-				gfx.PutPixel( x, y, effect.ps(attr) );
+				if ( zbuf.set_query( x, y, z ) )
+				{
+					//reset pos z back to non inverse form
+					const auto attr = iLine * z;
+
+					// perform texture lookup, clamp, and write pixel
+					gfx.PutPixel( x, y, effect.ps( attr ) );
+				}
 			}
 		}
 	}

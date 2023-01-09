@@ -33,6 +33,8 @@ public:
 	{
 		using namespace customUtil::math;
 
+		pipe.BeginFrame();
+
 		if ( kbd.KeyIsPressed( 'Q' ) )
 		{
 			zRot = (float)ClampAngle( zRot + dt * dTheta );
