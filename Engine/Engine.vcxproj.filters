@@ -93,6 +93,9 @@
     <ClInclude Include="SkinTexCube.h">
       <Filter>Header Files\Scenes</Filter>
     </ClInclude>
+	<ClInclude Include="DeerScene.h">
+      <Filter>Header Files\Scenes</Filter>
+    </ClInclude>
     <ClInclude Include="Pipeline.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -115,9 +118,6 @@
       <Filter>Header Files\Effect</Filter>
     </ClInclude>
     <ClInclude Include="CustomObjLoader.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="DeerScene.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Miniball.hpp">
