@@ -21,6 +21,16 @@ public:
 		pipe( gfx )
 	{
 		tlist = Cube::GetMinimumVerts<Vertex>();
+
+		//Set vert colors
+		tlist.vertices[0].color = { 255,0,0 };
+		tlist.vertices[1].color = { 255,255,0 };
+		tlist.vertices[2].color = { 255,0,255 };
+		tlist.vertices[3].color = { 0,0,255 };
+		tlist.vertices[4].color = { 0,255,0 };
+		tlist.vertices[5].color = { 127,127,0 };
+		tlist.vertices[6].color = { 0,125,57 };
+		tlist.vertices[7].color = { 255,0,127 };
 	}
 
 	void Update( Keyboard& kbd, Mouse& mouse, float dt ) override
@@ -64,14 +74,7 @@ public:
 
 	void Draw() override
 	{
-		tlist.vertices[0].color = { 255,0,0 };
-		tlist.vertices[1].color = { 255,255,0 };
-		tlist.vertices[2].color = { 255,0,255 };
-		tlist.vertices[3].color = { 0,0,255 };
-		tlist.vertices[4].color = { 0,255,0 };
-		tlist.vertices[5].color = { 127,127,0 };
-		tlist.vertices[6].color = { 0,125,57 };
-		tlist.vertices[7].color = { 255,0,127 };
+		
 
 		
 

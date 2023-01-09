@@ -31,9 +31,9 @@ Game::Game( MainWindow& wnd )
 	wnd( wnd ),
 	gfx( wnd )
 {
-	scenes.emplace_back( std::make_unique<SkinTexCube>(gfx) );
+	scenes.emplace_back( std::make_unique<SkinTexCube>(gfx, L"sprites\\mcgrass.jpg"));
 	scenes.emplace_back( std::make_unique<GradiantCubeScene>(gfx) );
-	scenes.emplace_back( std::make_unique<DeerScene>(gfx) );
+	scenes.emplace_back( std::make_unique<DeerScene>(gfx, "objects\\deer.obj"));
 	scenes.emplace_back( std::make_unique<TriangleScene>(gfx) );
 	currScene = scenes.begin();
 }

@@ -13,13 +13,13 @@ public:
 	typedef Pipeline<TextureEffect> Pipeline;
 	typedef Pipeline::Vertex Vertex;
 public:
-	SkinTexCube(Graphics& gfx)
+	SkinTexCube(Graphics& gfx, std::wstring textureFilePath)
 		:
 		Scene( "Minecraft grass block scene" ),
 		tlist(Cube::GetSkinned<Vertex>(1.f)),
 		pipe(gfx)
 	{
-		pipe.effect.ps.BindTexture( L"sprites\\mcgrass.jpg" );
+		pipe.effect.ps.BindTexture( textureFilePath );
 	}
 	void Update( Keyboard& kbd, Mouse& mouse, float dt ) override
 	{

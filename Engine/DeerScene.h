@@ -14,7 +14,7 @@ public:
 	typedef Pipeline::Vertex Vertex;
 
 public:
-	DeerScene( Graphics& gfx )
+	DeerScene( Graphics& gfx, std::string modelFilePath )
 		:
 		Scene( "deer sceme" ),
 		pipe( gfx )
@@ -22,11 +22,11 @@ public:
 		//Load file
 		//TODO take file path as deerscene param
 		
-		tlist = customUtil::obj::LoadObj<Vertex>( "objects\\deer.obj" );
+		tlist = customUtil::obj::LoadObj<Vertex>( modelFilePath );
 
 		pipe.effect.ps.BindColor( Colors::Gray );
 
-
+		tlist.MakeCentered();
 	}
 
 	void Update( Keyboard& kbd, Mouse& mouse, float dt ) override
@@ -70,6 +70,7 @@ public:
 
 	void Draw() override
 	{
+		
 
 		pipe.BindRotation( Mat3::RotationX( xRot ) * Mat3::RotationY( yRot ) * Mat3::RotationZ( zRot ) );
 		pipe.BindTranslation( { 0.f,0.f,zOffset } );
