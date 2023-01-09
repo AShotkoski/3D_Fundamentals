@@ -25,6 +25,7 @@
 #include "TriangleScene.h"
 #include "GradiantCubeScene.h"
 #include "DeerScene.h"
+#include "TwoCubeScene.h"
 
 Game::Game( MainWindow& wnd )
 	:
@@ -34,6 +35,7 @@ Game::Game( MainWindow& wnd )
 	scenes.emplace_back( std::make_unique<SkinTexCube>(gfx, L"sprites\\mcgrass.jpg"));
 	scenes.emplace_back( std::make_unique<GradiantCubeScene>(gfx) );
 	scenes.emplace_back( std::make_unique<DeerScene>(gfx, "objects\\deer.obj"));
+	scenes.emplace_back( std::make_unique<TwoCubeScene>(gfx));
 	scenes.emplace_back( std::make_unique<TriangleScene>(gfx) );
 	currScene = scenes.begin();
 }

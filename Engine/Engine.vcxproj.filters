@@ -93,7 +93,7 @@
     <ClInclude Include="SkinTexCube.h">
       <Filter>Header Files\Scenes</Filter>
     </ClInclude>
-	<ClInclude Include="DeerScene.h">
+    <ClInclude Include="DeerScene.h">
       <Filter>Header Files\Scenes</Filter>
     </ClInclude>
     <ClInclude Include="Pipeline.h">
@@ -125,6 +125,9 @@
     </ClInclude>
     <ClInclude Include="ObjLoader.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TwoCubeScene.h">
+      <Filter>Header Files\Scenes</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
