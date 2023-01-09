@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Pipeline.h"
+#include "DefaultVertexShader.h"
 
 class GradiantColorEffect
 {
@@ -88,7 +89,11 @@ public:
 	private:
 		
 	};
+
+	//use default vertex shader
+	typedef DefaultVertexShader<Vertex> VertexShader;
+
 public:
 	PixelShader ps;
-
+	VertexShader vs;
 };

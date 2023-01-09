@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Pipeline.h"
+#include "DefaultVertexShader.h"
 
 class TextureEffect
 {
@@ -105,7 +106,12 @@ public:
 		float tex_yclamp;
 		bool isTexBound = false;
 	};
+
+	//use def vert shader
+	typedef DefaultVertexShader<Vertex> VertexShader;
+
 public:
+	VertexShader vs;
 	PixelShader ps;
-	
+
 };

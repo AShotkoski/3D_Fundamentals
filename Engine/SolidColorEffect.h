@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Pipeline.h"
+#include "DefaultVertexShader.h"
 
 class SolidColorEffect
 {
@@ -84,7 +85,12 @@ public:
 		// prepare clamping constants
 		Color c;
 	};
+
+
+	// use def vert shader
+	typedef DefaultVertexShader<Vertex> VertexShader;
+
 public:
 	PixelShader ps;
-
+	VertexShader vs;
 };

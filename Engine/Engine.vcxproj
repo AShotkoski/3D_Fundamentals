@@ -147,6 +147,7 @@
     <ClInclude Include="Cube.h" />
     <ClInclude Include="DeerScene.h" />
     <ClInclude Include="CustomObjLoader.h" />
+    <ClInclude Include="DefaultVertexShader.h" />
     <ClInclude Include="GradiantColorEffect.h" />
     <ClInclude Include="GradiantCubeScene.h" />
     <ClInclude Include="Miniball.hpp" />

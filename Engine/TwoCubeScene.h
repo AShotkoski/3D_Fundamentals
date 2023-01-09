@@ -104,14 +104,14 @@ public:
 	{
 		//Big cube
 		{
-			pipe.BindRotation( Mat3::RotationX( xRot ) * Mat3::RotationY( yRot ) * Mat3::RotationZ( zRot ) );
-			pipe.BindTranslation( { 0.f,0.f,2.f } );
+			pipe.effect.vs.BindRotation( Mat3::RotationX( xRot ) * Mat3::RotationY( yRot ) * Mat3::RotationZ( zRot ) );
+			pipe.effect.vs.BindTranslation( { 0.f,0.f,2.f } );
 			pipe.Draw( tlist0 );
 		}
 		//lil cube
 		{
-			pipe.BindRotation( Mat3::RotationX( -xRot ) * Mat3::RotationY( -yRot ) * Mat3::RotationZ( -zRot ) );
-			pipe.BindTranslation( { 0.f,0.f,zOffset } );
+			pipe.effect.vs.BindRotation( Mat3::RotationX( -xRot ) * Mat3::RotationY( -yRot ) * Mat3::RotationZ( -zRot ) );
+			pipe.effect.vs.BindTranslation( { 0.f,0.f,zOffset } );
 			pipe.Draw( tlist1 );
 		}
 
