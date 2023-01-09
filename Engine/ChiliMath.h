@@ -25,7 +25,7 @@ namespace customUtil
 {
 	namespace math
 	{
-		constexpr float PI = 3.14159265f;
+		inline constexpr float PI = 3.14159265f;
 
 		template <typename T>
 		inline auto sq( const T& x )

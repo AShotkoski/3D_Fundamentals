@@ -7,10 +7,13 @@ template <typename T>
 class _Vec3 : public _Vec2<T>
 {
 public:
+	using _Vec2<T>::x;
+	using _Vec2<T>::y;
+public:
 	_Vec3() : z(0.f){}
 	_Vec3( T x, T y, T z )
 		:
-		_Vec2(x,y),
+		_Vec2<T>(x,y),
 		z( z )
 	{}
 	_Vec3( const _Vec3& vect )

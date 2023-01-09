@@ -58,7 +58,7 @@ public:
 	}
 	static _Mat3 Scaling( T factor )
 	{
-		_Mat3 s = { factor,(T)0.0,(T)0.0
+		_Mat3 s = { factor,(T)0.0,(T)0.0,
 					(T)0.0,factor,(T)0.0,
 					(T)0.0,(T)0.0,factor };
 		return s;

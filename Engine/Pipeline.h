@@ -76,7 +76,8 @@ private:
 	{
 		// generate triangle from 3 vertices using gs
 		// and send to post-processing
-		PostProcessTriangleVertices( Triangle<Vertex>{ v0, v1, v2 } );
+		Triangle<Vertex> tri = Triangle( v0, v1, v2 );
+		PostProcessTriangleVertices( tri );
 	}
 	// vertex post-processing function
 	// perform perspective and viewport transformations
