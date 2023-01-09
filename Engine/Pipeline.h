@@ -66,7 +66,7 @@ private:
 			const auto& v0 = vertices[indices[i * 3]];
 			const auto& v1 = vertices[indices[i * 3 + 1]];
 			const auto& v2 = vertices[indices[i * 3 + 2]];
-			// cull backfacing triangles with cross product (%) shenanigans
+			// cull backfacing triangles with cross product shenanigans
 			if ( ( v1.pos - v0.pos ).Cross( ( v2.pos - v0.pos )) * v0.pos <= 0.0f )
 			{
 				// process 3 vertices into a triangle
@@ -183,7 +183,7 @@ private:
 		DrawFlatTriangle( it0, it1, it2, dit0, dit1, itEdge1 );
 	}
 	// does processing common to both flat top and flat bottom tris
-	// texture lookup and pixel written here
+	// pixel written here through pixel shader
 	void DrawFlatTriangle( const Vertex& it0,
 		const Vertex& it1,
 		const Vertex& it2,
@@ -211,8 +211,6 @@ private:
 			const int xEnd = (int)ceil( itEdge1.pos.x - 0.5f ); // the pixel AFTER the last pixel drawn
 
 			// create scanline interpolant startpoint
-			// (some waste for interpolating x,y,z, but makes life easier not having
-			//  to split them off, and z will be needed in the future anyways...)
 			auto iLine = itEdge0;
 
 			// calculate delta scanline interpolant / dx
@@ -224,11 +222,13 @@ private:
 
 			for ( int x = xStart; x < xEnd; x++, iLine += diLine )
 			{
+				//recover z
 				const float z = 1.f / iLine.pos.z;
 
+				//reject pixels that are occluded
 				if ( zbuf.set_query( x, y, z ) )
 				{
-					//reset pos z back to non inverse form
+					//reset interpolated coord back to non inverse form
 					const auto attr = iLine * z;
 
 					// perform texture lookup, clamp, and write pixel
