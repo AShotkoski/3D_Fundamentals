@@ -100,11 +100,18 @@ public:
 
 	void Draw() override
 	{
-
-		pipe.BindRotation( Mat3::RotationX( xRot ) * Mat3::RotationY( yRot ) * Mat3::RotationZ( zRot ) );
-		pipe.BindTranslation( { 0.f,0.f,zOffset } );
-		pipe.Draw( tlist0 );
-		pipe.Draw( tlist1 );
+		//Big cube
+		{
+			pipe.BindRotation( Mat3::RotationX( xRot ) * Mat3::RotationY( yRot ) * Mat3::RotationZ( zRot ) );
+			pipe.BindTranslation( { 0.f,0.f,2.f } );
+			pipe.Draw( tlist0 );
+		}
+		//lil cube
+		{
+			pipe.BindRotation( Mat3::RotationX( -xRot ) * Mat3::RotationY( -yRot ) * Mat3::RotationZ( -zRot ) );
+			pipe.BindTranslation( { 0.f,0.f,zOffset } );
+			pipe.Draw( tlist1 );
+		}
 
 	}
 
