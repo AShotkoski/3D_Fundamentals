@@ -7,7 +7,7 @@
 #include "PubeScreenTransformer.h"
 #include "Mat3.h"
 #include <algorithm>
-
+#include "ZBuffer.h"
 
 template <class Effect>
 class Pipeline
@@ -232,6 +232,7 @@ public:
 private:
 	Graphics& gfx;
 	PubeScreenTransformer pst;
+	ZBuffer zbuf;
 	Mat3 rotation = Mat3::Identity();
 	Vec3 translation;
 };
