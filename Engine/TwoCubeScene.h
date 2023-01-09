@@ -21,27 +21,6 @@ public:
 		Scene( "Dual cube scene" ),
 		pipe( gfx )
 	{
-		std::vector<Color> vCols =
-		{
-			Colors::Coral,
-			Colors::DarkGreen,
-			Colors::DarkKhaki,
-			Colors::DarkOrange,
-			Colors::Maroon,
-			Colors::GhostWhite,
-			Colors::DarkViolet,
-			Colors::DeepPink,
-			Colors::Gold,
-			Colors::HotPink,
-			Colors::Khaki,
-			Colors::Tomato,
-			Colors::PeachPuff,
-			Colors::Orange,
-			Colors::OrangeRed,
-			Colors::Teal,
-			Colors::MediumAquamarine
-		};
-
 		std::mt19937 rng( std::random_device{}( ) );
 
 		tlist0 = Cube::GetMinimumVerts<Vertex>();
@@ -103,6 +82,19 @@ public:
 		{
 			zOffset -= dt;
 		}
+		while ( !mouse.IsEmpty() )
+		{
+			if ( mouse.Read().GetType() == Mouse::Event::RPress )
+			{
+				std::rotate( vCols.begin(), std::next( vCols.begin(),1 ), vCols.end() );
+				std::for_each( tlist1.vertices.begin(), tlist1.vertices.end(),
+					[&, i = 0]( Vertex& v ) mutable
+					{
+						v.color = Vec3( vCols[i++] );  //this invokes the colors operator vec3
+					}
+				);
+			}
+		}
 
 	}
 
@@ -125,4 +117,25 @@ private:
 	float xRot = 0.f;
 	float yRot = 0.f;
 	float zRot = 0.f;
+
+	std::vector<Color> vCols =
+	{
+		Colors::Coral,
+		Colors::DarkGreen,
+		Colors::DarkKhaki,
+		Colors::DarkOrange,
+		Colors::Maroon,
+		Colors::GhostWhite,
+		Colors::DarkViolet,
+		Colors::DeepPink,
+		Colors::Gold,
+		Colors::HotPink,
+		Colors::Khaki,
+		Colors::Tomato,
+		Colors::PeachPuff,
+		Colors::Orange,
+		Colors::OrangeRed,
+		Colors::Teal,
+		Colors::MediumAquamarine
+	};
 };
