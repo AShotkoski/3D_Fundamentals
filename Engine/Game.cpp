@@ -32,11 +32,11 @@ Game::Game( MainWindow& wnd )
 	wnd( wnd ),
 	gfx( wnd )
 {
-	scenes.emplace_back( std::make_unique<TriangleScene>(gfx) );
-	scenes.emplace_back( std::make_unique<SkinTexCube>(gfx, L"sprites\\mcgrass.jpg"));
-	scenes.emplace_back( std::make_unique<GradiantCubeScene>(gfx) );
-	scenes.emplace_back( std::make_unique<DeerScene>(gfx, "objects\\deer.obj"));
-	scenes.emplace_back( std::make_unique<TwoCubeScene>(gfx));
+	scenes.emplace_back( std::make_unique<DeerScene>( gfx, "objects\\deer.obj" ) );
+	scenes.emplace_back( std::make_unique<TriangleScene>( gfx ) );
+	scenes.emplace_back( std::make_unique<SkinTexCube>( gfx, L"sprites\\mcgrass.jpg" ) );
+	scenes.emplace_back( std::make_unique<GradiantCubeScene>( gfx ) );
+	scenes.emplace_back( std::make_unique<TwoCubeScene>( gfx ) );
 	currScene = scenes.begin();
 }
 
@@ -50,25 +50,25 @@ void Game::Go()
 
 void Game::UpdateModel()
 {
-	const float dt = 1.f / 144.f;
+	const float dt = ft.Mark();
 
 	while ( !wnd.kbd.KeyIsEmpty() )
 	{
 		auto e = wnd.kbd.ReadKey();
 
-		if(e.GetCode() == VK_TAB && e.IsPress() )
+		if ( e.GetCode() == VK_TAB && e.IsPress() )
 		{
-			
-			CycleScenes( wnd.kbd.KeyIsPressed( VK_SHIFT ) ? true : false);
+
+			CycleScenes( wnd.kbd.KeyIsPressed( VK_SHIFT ) ? true : false );
 		}
-		
+
 	}
 
 	( *currScene )->Update( wnd.kbd, wnd.mouse, dt );
-	
+
 }
 
-void Game::CycleScenes(bool backwards)
+void Game::CycleScenes( bool backwards )
 {
 	if ( !backwards )
 	{
@@ -81,7 +81,7 @@ void Game::CycleScenes(bool backwards)
 	{
 		if ( currScene == scenes.begin() )
 		{
-			currScene = std::prev(scenes.end());
+			currScene = std::prev( scenes.end() );
 		}
 		else
 		{
@@ -94,5 +94,5 @@ void Game::CycleScenes(bool backwards)
 
 void Game::ComposeFrame()
 {
-	( *currScene )->Draw( );
+	( *currScene )->Draw();
 }

@@ -149,6 +149,7 @@
     <ClInclude Include="CustomObjLoader.h" />
     <ClInclude Include="DefaultVertexShader.h" />
     <ClInclude Include="dxerr.h" />
+    <ClInclude Include="FrameTimer.h" />
     <ClInclude Include="GradiantColorEffect.h" />
     <ClInclude Include="GradiantCubeScene.h" />
     <ClInclude Include="Miniball.hpp" />
@@ -180,6 +181,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dxerr.cpp" />
+    <ClCompile Include="FrameTimer.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GDIPlusManager.cpp" />
     <ClCompile Include="Graphics.cpp" />
