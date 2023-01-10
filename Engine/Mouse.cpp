@@ -68,7 +68,7 @@ Mouse::Event Mouse::Read()
 
 void Mouse::Flush()
 {
-	//std::swap( buffer, std::queue<Mouse::Event>() );
+	std::queue<Mouse::Event>().swap( buffer );
 }
 
 void Mouse::OnMouseLeave()
